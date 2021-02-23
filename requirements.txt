@@ -1,0 +1,6 @@
+requests>=2.23.0
+pandas>=0.24.2
+bs4>=0.0.1
+beautifulsoup4>=4.6.0
+selenium>=3.141.0
+mysql-connector-python>=8.0.23

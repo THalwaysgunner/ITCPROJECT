@@ -10,13 +10,14 @@ options = Options()
 options.headless = True
 options.add_argument("--window-size=1920,1200")
 
+
 class Scraper:
     def __init__(self, save=False):
         self.soup = self.get_soup()
         self.save = save
 
     def get_soup(self):
-        try:
+        try :
             page = requests.get(t.URL)
             soup = BeautifulSoup(page.content, t.HTML_PARSER)
             return soup
@@ -32,7 +33,7 @@ class Scraper:
             self.save_df(main_data)
             self.save_df(data_executives)
 
-        else:
+        else :
             print(main_data.head())
             print(data_executives.head())
             print(financial_data.head())
@@ -52,10 +53,10 @@ class Scraper:
         News = []
         statistics_data_series = []
 
-        body = table.find(t.TAG_BODY, attrs={t.TAG_REACTID : '72'})
+        body = table.find(t.TAG_BODY, attrs={t.TAG_REACTID: '72'})
         for tr in body.find_all(t.TAG_TR) :
-            symbol = tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL : 'Symbol'}).text
-            if (symbol_choice is None) or (symbol in symbol_choice) :  # choosing specific data
+            symbol = tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL: 'Symbol'}).text
+            if (symbol_choice is None) or (symbol in symbol_choice):  # choosing specific data
                 Symbol.append(symbol)
                 Name.append(tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL : 'Name'}).text)
                 Price.append(tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL : 'Price (Intraday)'}).text)
@@ -67,7 +68,7 @@ class Scraper:
                 Executives.append(executives)
                 financial_data_series.append(self.get_financial(symbol))
                 News.append(self.get_news(symbol))
-                # statistics_data_series.append(self.get_stats(symbol))
+                statistics_data_series.append(self.get_stats(symbol))
 
         data = self.create_data_frame(Symbol, Name, Price, Volume, Market_cap, Description)
         financial_data = pd.DataFrame(financial_data_series)
@@ -87,9 +88,10 @@ class Scraper:
         data_excutive = pd.DataFrame(executives_siries_lst)
 
         return data, data_excutive, financial_data, data_news
+
     # statistics_data
 
-    def get_stats(self,symbol):
+    def get_stats(self, symbol):
         enterprise_value = 'no-data'
         financial_value = 'no-data'
         year_Week_High = 'no-data'
@@ -97,43 +99,61 @@ class Scraper:
         percent_Held_by_Insiders = 'no-data'
         percent_Held_by_Institutions = 'no-data'
 
-        index = ['Symbol','Enterprise value', 'Total Debt/Equity (mrq)', '52 Week High', '52 Week Low ','Share % Held by Insiders','Share % Held by Institutions']
+        index = ['Symbol', 'Enterprise value', 'Total Debt/Equity (mrq)', '52 Week High', '52 Week Low ', 'Share % '
+                                                                                                          'Held by '
+                                                                                                          'Insiders',
+                 'Share % Held by Institutions']
 
         stat_link = t.STATS_LINK.format(symbol)
         driver = webdriver.Chrome(options=options, executable_path=t.DRIVER_PATH)
         driver.get(stat_link)
         driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
         source = driver.page_source
-        #TODO Add scrolling selenium option
+        # TODO Add scrolling selenium option
         time.sleep(5)
         PAGE = BeautifulSoup(source, t.HTML_PARSER)
         driver.quit()
 
-        try:
+        try :
 
-            valuation =  PAGE.find(t.TAG_DIV,attrs={t.TAG_CLASS:'Mstart(a) Mend(a)'}).find('div',attrs= {'class':'Fl(start) smartphone_W(100%) W(50%)'})
-            financial = PAGE.find(t.TAG_DIV,attrs={t.TAG_CLASS:'Mstart(a) Mend(a)'}).find('div',attrs= {'class':'Fl(start) W(50%) smartphone_W(100%)'})
-            info = PAGE.find(t.TAG_DIV,attrs={t.TAG_CLASS:'Mstart(a) Mend(a)'}).find('div',attrs= {'class':'Fl(end) W(50%) smartphone_W(100%)'})
+            valuation = PAGE.find(t.TAG_DIV, attrs={t.TAG_CLASS: 'Mstart(a) Mend(a)'}).find('div', attrs={
+                'class': 'Fl(start) smartphone_W(100%) W(50%)'})
+            financial = PAGE.find(t.TAG_DIV, attrs={t.TAG_CLASS: 'Mstart(a) Mend(a)'}).find('div', attrs={
+                'class': 'Fl(start) W(50%) smartphone_W(100%)'})
+            info = PAGE.find(t.TAG_DIV, attrs={t.TAG_CLASS: 'Mstart(a) Mend(a)'}).find('div', attrs={
+                'class': 'Fl(end) W(50%) smartphone_W(100%)'})
 
-            valuation_tr = valuation.find_all(t.TAG_TR,attrs = {t.TAG_CLASS:'Bxz(bb) H(36px) BdB Bdbc($seperatorColor) fi-row Bgc($hoverBgColor):h'})[0]
-            financial_tr = financial.find_all(t.TAG_TR,attrs={t.TAG_CLASS:'Bxz(bb) H(36px) BdY Bdc($seperatorColor) '})[17]
-            info_tr = info.find_all(t.TAG_TR, attrs={t.TAG_CLASS : 'Bxz(bb) H(36px) BdY Bdc($seperatorColor) '})
+            valuation_tr = valuation.find_all(t.TAG_TR, attrs={
+                t.TAG_CLASS: 'Bxz(bb) H(36px) BdB Bdbc($seperatorColor) fi-row Bgc($hoverBgColor):h'})[0]
+            financial_tr = \
+                financial.find_all(t.TAG_TR, attrs={t.TAG_CLASS: 'Bxz(bb) H(36px) BdY Bdc($seperatorColor) '})[17]
+            info_tr = info.find_all(t.TAG_TR, attrs={t.TAG_CLASS: 'Bxz(bb) H(36px) BdY Bdc($seperatorColor) '})
 
-            enterprise_value = valuation_tr.find(t.TAG_TD,attrs = {t.TAG_CLASS:'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-            financial_value = financial_tr.find(t.TAG_TD,attrs={t.TAG_CLASS:'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-            year_Week_High = info_tr[3].find(t.TAG_TD,attrs={t.TAG_CLASS:'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-            year_Week_low = info_tr[4].find(t.TAG_TD,attrs={t.TAG_CLASS:'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-            percent_Held_by_Insiders = info_tr[11].find(t.TAG_TD,attrs={'class':'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-            percent_Held_by_Institutions = info_tr[12].find(t.TAG_TD,attrs={'class' : 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
+            enterprise_value = valuation_tr.find(t.TAG_TD,
+                                                 attrs={t.TAG_CLASS: 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
+            financial_value = financial_tr.find(t.TAG_TD,
+                                                attrs={t.TAG_CLASS: 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
+            year_Week_High = info_tr[3].find(t.TAG_TD,
+                                             attrs={t.TAG_CLASS: 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
+            year_Week_low = info_tr[4].find(t.TAG_TD,
+                                            attrs={t.TAG_CLASS: 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
+            percent_Held_by_Insiders = info_tr[11].find(t.TAG_TD,
+                                                        attrs={'class': 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
+            percent_Held_by_Institutions = info_tr[12].find(t.TAG_TD, attrs={
+                'class': 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
 
-        except:
+        except :
             print('cannot extract the {} statistics'.format(symbol))
         finally:
-            return pd.Series([symbol, enterprise_value, financial_value, year_Week_High , year_Week_low,percent_Held_by_Insiders,percent_Held_by_Institutions ], index=index)
+            return pd.Series(
+                [symbol, enterprise_value, financial_value, year_Week_High, year_Week_low, percent_Held_by_Insiders,
+                 percent_Held_by_Institutions], index=index)
 
-    def get_news(self,symbol):
+    def get_news(self, symbol):
         news_link = t.NEWS_LINK.format(symbol, symbol)
-        attr = 'js-content-viewer Fw(b) Fz(18px) Lh(23px) LineClamp(2,46px) Fz(17px)--sm1024 Lh(19px)--sm1024 LineClamp(2,38px)--sm1024 mega-item-header-link Td(n) C(#0078ff):h C(#000) not-isInStreamVideoEnabled wafer-destroyed'
+        attr = 'js-content-viewer Fw(b) Fz(18px) Lh(23px) LineClamp(2,46px) Fz(17px)--sm1024 Lh(19px)--sm1024 ' \
+               'LineClamp(2,38px)--sm1024 mega-item-header-link Td(n) C(#0078ff):h C(#000) not-isInStreamVideoEnabled ' \
+               'wafer-destroyed '
         series_lst = []
         index = ['Symbol', 'Title', 'Article link']
 
@@ -145,23 +165,23 @@ class Scraper:
         soup = BeautifulSoup(source, t.HTML_PARSER)
         driver.quit()
 
-        try:
+        try :
             content = soup.find(t.TAG_UL, attrs={t.TAG_CLASS : 'My(0) Ov(h) P(0) Wow(bw)'})
-            for tr in content.find_all(t.TAG_LI, attrs={t.TAG_CLASS : 'js-stream-content Pos(r)'}):
-                title = tr.find(t.TAG_A, attrs={t.TAG_CLASS : attr},href=True).text
-                link = tr.find(t.TAG_A, attrs={t.TAG_CLASS : attr},href=True)[t.TAG_HREF]
+            for tr in content.find_all(t.TAG_LI, attrs={t.TAG_CLASS : 'js-stream-content Pos(r)'}) :
+                title = tr.find(t.TAG_A, attrs={t.TAG_CLASS : attr}, href=True).text
+                link = tr.find(t.TAG_A, attrs={t.TAG_CLASS : attr}, href=True)[t.TAG_HREF]
                 series_lst.append(pd.Series([symbol, title, link], index=index))
 
             return series_lst
-        except:
+        except :
             print('cannot extract the {} articles'.format(symbol))
             return [pd.Series([symbol, "N/A", "N/A", "N/A"], index=index)]
 
-    def get_description(self, symbol):
-        try:
+    def get_description(self, symbol) :
+        try :
             PROFILE_LINK = t.URL_LINK.format(symbol, symbol)
             PAGE = self.get_html(PROFILE_LINK)
-            CONTENT = PAGE.find(t.TAG_P, attrs={t.TAG_CLASS: 'Mt(15px) Lh(1.6)'}).text
+            CONTENT = PAGE.find(t.TAG_P, attrs={t.TAG_CLASS : 'Mt(15px) Lh(1.6)'}).text
             return CONTENT
         except :
             print('cannot extract the {} description'.format(symbol))
@@ -170,15 +190,16 @@ class Scraper:
     def get_executive(self, symbol) :
         series_lst = []
         index = ['Symbol', 'Name', 'Title', 'Salary']
-        try:
+        try :
             PROFILE_LINK = t.URL_LINK.format(symbol, symbol)
             PAGE = self.get_html(PROFILE_LINK)
             content = PAGE.find(t.TAG_TABLE, attrs={t.TAG_CLASS : 'W(100%)'})
             body = content.find(t.TAG_BODY)
-            for tr in body.find_all(t.TAG_TR, attrs={t.TAG_CLASS : 'C($primaryColor) BdB Bdc($seperatorColor) H(36px)'}) :
+            for tr in body.find_all(t.TAG_TR,
+                                    attrs={t.TAG_CLASS : 'C($primaryColor) BdB Bdc($seperatorColor) H(36px)'}) :
                 Name = tr.find(t.TAG_TD, attrs={t.TAG_CLASS : 'Ta(start)'}).text
                 Title = tr.find(t.TAG_TD, attrs={t.TAG_CLASS : 'Ta(start) W(45%)'}).text
-                Salary = tr.find(t.TAG_TD, attrs={t.TAG_CLASS: 'Ta(end)'}).text
+                Salary = tr.find(t.TAG_TD, attrs={t.TAG_CLASS : 'Ta(end)'}).text
                 series_lst.append(pd.Series([symbol, Name, Title, Salary], index=index))
 
             return series_lst
@@ -186,29 +207,30 @@ class Scraper:
             print('cannot extract the {} executives'.format(symbol))
             return [pd.Series([symbol, "N/A", "N/A", "N/A"], index=index)]
 
-    def get_financial(self,symbol):
+    def get_financial(self, symbol) :
         total_yearly_revenue = 'no-data'
         total_yearly_Gross_Profit = 'no-data'
         total_yearly_expense = 'no-data'
         total_yearly_Cost_of_Revenue = 'no-data'
-        index = ['Symbol', 'TTM revenue', 'TTM Gross Profit', 'TTM expense','TTM Cost_of_Revenue']
+        index = ['Symbol', 'TTM revenue', 'TTM Gross Profit', 'TTM expense', 'TTM Cost_of_Revenue']
         attr = 'Ta(c) Py(6px) Bxz(bb) BdB Bdc($seperatorColor) Miw(120px) Miw(140px)--pnclg Bgc($lv1BgColor) fi-row:h_Bgc($hoverBgColor) D(tbc)'
 
-        try:
+        try :
             link = t.FINANCIAL_LINK.format(symbol, symbol)
             page = self.get_html(link)
             content = page.find(t.TAG_DIV, attrs={t.TAG_CLASS : 'D(tbrg)'})
             tr = content.find_all(t.TAG_DIV, attrs={t.TAG_DATATEST : 'fin-row'})
-            total_yearly_revenue = tr[0].find(t.TAG_DIV, attrs={t.TAG_CLASS: attr}).text
-            total_yearly_Gross_Profit = tr[2].find(t.TAG_DIV, attrs={t.TAG_CLASS: attr}).text
-            total_yearly_expense = tr[11].find(t.TAG_DIV, attrs={t.TAG_CLASS: attr}).text
-            total_yearly_Cost_of_Revenue = tr[1].find(t.TAG_DIV, attrs={t.TAG_CLASS: attr}).text
+            total_yearly_revenue = tr[0].find(t.TAG_DIV, attrs={t.TAG_CLASS : attr}).text
+            total_yearly_Gross_Profit = tr[2].find(t.TAG_DIV, attrs={t.TAG_CLASS : attr}).text
+            total_yearly_expense = tr[11].find(t.TAG_DIV, attrs={t.TAG_CLASS : attr}).text
+            total_yearly_Cost_of_Revenue = tr[1].find(t.TAG_DIV, attrs={t.TAG_CLASS : attr}).text
 
-        except:
-                print('cannot extract the {} financial info'.format(symbol))
+        except :
+            print('cannot extract the {} financial info'.format(symbol))
 
-        finally:
-            return pd.Series([symbol, total_yearly_revenue, total_yearly_Gross_Profit, total_yearly_expense , total_yearly_Cost_of_Revenue ], index=index)
+        finally :
+            return pd.Series([symbol, total_yearly_revenue, total_yearly_Gross_Profit, total_yearly_expense,
+                              total_yearly_Cost_of_Revenue], index=index)
 
     def get_table(self) :
         table = self.soup.find(t.TAG_TABLE, attrs={t.TAG_REACTID : '42'})
