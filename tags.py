@@ -1,4 +1,4 @@
-
+"""constants"""
 
 DRIVER_PATH = '/Users/mac/PycharmProjects/pluralsight/project/driver/chromedriver'
 URL = 'https://finance.yahoo.com/most-active'
