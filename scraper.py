@@ -20,34 +20,32 @@ class Scraper:
         self.save = save
 
     def get_soup(self):
-<<<<<<< HEAD
-        try :
-=======
         """
         this function gets the content from the page and convert it via BeautifulSoup
         """
         try:
->>>>>>> 9dc5d80bcb17046be673f9e0320aea8f4a141b1a
             page = requests.get(t.URL)
             soup = BeautifulSoup(page.content, t.HTML_PARSER)
             return soup
         except ValueError:
             print('OOPS! ERROR {}'.format(page.status_code))
 
-    def scrape_all(self):
+    def scrape_all(self,symbol_choice=None):
         """
         this function saves or prints (upon the command) entered data
         into a database made out of numeres tables
         this function gets the data by calling "get_data" function.
         """
         table = self.get_table()
-        main_data, data_executives, financial_data, news_data = self.get_data(table)
+        main_data, data_executives, financial_data, news_data = self.get_data(table,symbol_choice)
 
         if self.save:
-            self.save_df(main_data)
-            self.save_df(data_executives)
+            self.save_df(main_data,'main_data')
+            self.save_df(data_executives,'data_executives')
+            self.save_df(financial_data,'financial_data')
+            self.save_df(news_data,'news_data')
 
-        else :
+        else:
             print(main_data.head())
             print(data_executives.head())
             print(financial_data.head())
@@ -80,11 +78,8 @@ class Scraper:
         News = []
 
         body = table.find(t.TAG_BODY, attrs={t.TAG_REACTID: '72'})
-<<<<<<< HEAD
-        for tr in body.find_all(t.TAG_TR) :
-=======
         for tr in body.find_all(t.TAG_TR):
->>>>>>> 9dc5d80bcb17046be673f9e0320aea8f4a141b1a
+
             symbol = tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL: 'Symbol'}).text
             if (symbol_choice is None) or (symbol in symbol_choice):  # choosing specific data
                 Symbol.append(symbol)
@@ -98,10 +93,6 @@ class Scraper:
                 Executives.append(executives)
                 financial_data_series.append(self.get_financial(symbol))
                 News.append(self.get_news(symbol))
-<<<<<<< HEAD
-                statistics_data_series.append(self.get_stats(symbol))
-=======
->>>>>>> 9dc5d80bcb17046be673f9e0320aea8f4a141b1a
 
         data = self.create_data_frame(Symbol, Name, Price, Volume, Market_cap, Description)
         financial_data = pd.DataFrame(financial_data_series)
@@ -120,74 +111,13 @@ class Scraper:
         data_excutive = pd.DataFrame(executives_siries_lst)
 
         return data, data_excutive, financial_data, data_news
-<<<<<<< HEAD
-
-    # statistics_data
-
-    def get_stats(self, symbol):
-        enterprise_value = 'no-data'
-        financial_value = 'no-data'
-        year_Week_High = 'no-data'
-        year_Week_low = 'no-data'
-        percent_Held_by_Insiders = 'no-data'
-        percent_Held_by_Institutions = 'no-data'
-
-        index = ['Symbol', 'Enterprise value', 'Total Debt/Equity (mrq)', '52 Week High', '52 Week Low ', 'Share % '
-                                                                                                          'Held by '
-                                                                                                          'Insiders',
-                 'Share % Held by Institutions']
-
-        stat_link = t.STATS_LINK.format(symbol)
-        driver = webdriver.Chrome(options=options, executable_path=t.DRIVER_PATH)
-        driver.get(stat_link)
-        driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-        source = driver.page_source
-        # TODO Add scrolling selenium option
-        time.sleep(5)
-        PAGE = BeautifulSoup(source, t.HTML_PARSER)
-        driver.quit()
-
-        try :
-
-            valuation = PAGE.find(t.TAG_DIV, attrs={t.TAG_CLASS: 'Mstart(a) Mend(a)'}).find('div', attrs={
-                'class': 'Fl(start) smartphone_W(100%) W(50%)'})
-            financial = PAGE.find(t.TAG_DIV, attrs={t.TAG_CLASS: 'Mstart(a) Mend(a)'}).find('div', attrs={
-                'class': 'Fl(start) W(50%) smartphone_W(100%)'})
-            info = PAGE.find(t.TAG_DIV, attrs={t.TAG_CLASS: 'Mstart(a) Mend(a)'}).find('div', attrs={
-                'class': 'Fl(end) W(50%) smartphone_W(100%)'})
-
-            valuation_tr = valuation.find_all(t.TAG_TR, attrs={
-                t.TAG_CLASS: 'Bxz(bb) H(36px) BdB Bdbc($seperatorColor) fi-row Bgc($hoverBgColor):h'})[0]
-            financial_tr = \
-                financial.find_all(t.TAG_TR, attrs={t.TAG_CLASS: 'Bxz(bb) H(36px) BdY Bdc($seperatorColor) '})[17]
-            info_tr = info.find_all(t.TAG_TR, attrs={t.TAG_CLASS: 'Bxz(bb) H(36px) BdY Bdc($seperatorColor) '})
-
-            enterprise_value = valuation_tr.find(t.TAG_TD,
-                                                 attrs={t.TAG_CLASS: 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-            financial_value = financial_tr.find(t.TAG_TD,
-                                                attrs={t.TAG_CLASS: 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-            year_Week_High = info_tr[3].find(t.TAG_TD,
-                                             attrs={t.TAG_CLASS: 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-            year_Week_low = info_tr[4].find(t.TAG_TD,
-                                            attrs={t.TAG_CLASS: 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-            percent_Held_by_Insiders = info_tr[11].find(t.TAG_TD,
-                                                        attrs={'class': 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-            percent_Held_by_Institutions = info_tr[12].find(t.TAG_TD, attrs={
-                'class': 'Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-
-        except :
-            print('cannot extract the {} statistics'.format(symbol))
-        finally:
-            return pd.Series(
-                [symbol, enterprise_value, financial_value, year_Week_High, year_Week_low, percent_Held_by_Insiders,
-                 percent_Held_by_Institutions], index=index)
 
     def get_news(self, symbol):
         news_link = t.NEWS_LINK.format(symbol, symbol)
         attr = 'js-content-viewer Fw(b) Fz(18px) Lh(23px) LineClamp(2,46px) Fz(17px)--sm1024 Lh(19px)--sm1024 ' \
                'LineClamp(2,38px)--sm1024 mega-item-header-link Td(n) C(#0078ff):h C(#000) not-isInStreamVideoEnabled ' \
                'wafer-destroyed '
-=======
+
 
     def get_news(self, symbol):
         """
@@ -201,7 +131,7 @@ class Scraper:
         attr = 'js-content-viewer Fw(b) Fz(18px) Lh(23px) LineClamp(2,46px) Fz(17px)--sm1024 Lh(19px)--sm1024 ' \
                'LineClamp(2,38px)--sm1024 mega-item-header-link Td(n) C(#0078ff):h C(#000) not-isInStreamVideoEnabled' \
                ' wafer-destroyed'
->>>>>>> 9dc5d80bcb17046be673f9e0320aea8f4a141b1a
+
         series_lst = []
         index = ['Symbol', 'Title', 'Article link']
 
@@ -224,10 +154,9 @@ class Scraper:
             print('cannot extract the {} articles'.format(symbol))
             return [pd.Series([symbol, "N/A", "N/A", "N/A"], index=index)]
 
-<<<<<<< HEAD
-    def get_description(self, symbol) :
-        try :
-=======
+
+
+
     def get_description(self, symbol):
         """
         this function enters the symbol's (=stock) profile page, through the link (PROFILE_LINK)
@@ -236,7 +165,7 @@ class Scraper:
         :return: description of the current stock, if not exist - return 'no description' instead
         """
         try:
->>>>>>> 9dc5d80bcb17046be673f9e0320aea8f4a141b1a
+
             PROFILE_LINK = t.URL_LINK.format(symbol, symbol)
             PAGE = self.get_html(PROFILE_LINK)
             CONTENT = PAGE.find(t.TAG_P, attrs={t.TAG_CLASS : 'Mt(15px) Lh(1.6)'}).text
@@ -273,9 +202,7 @@ class Scraper:
             print('cannot extract the {} executives'.format(symbol))
             return [pd.Series([symbol, "N/A", "N/A", "N/A"], index=index)]
 
-<<<<<<< HEAD
-    def get_financial(self, symbol) :
-=======
+
     def get_financial(self, symbol):
         """
         this function enters the symbol (=stock) financial section, through the link (FINANCIAL_LINK)
@@ -284,7 +211,7 @@ class Scraper:
         :return: series of lists, when each list contains:
         stock_name (for later DF organizing) and some financial info (yearly revenue, profit, expenses etc).
         """
->>>>>>> 9dc5d80bcb17046be673f9e0320aea8f4a141b1a
+
         total_yearly_revenue = 'no-data'
         total_yearly_Gross_Profit = 'no-data'
         total_yearly_expense = 'no-data'
@@ -324,10 +251,10 @@ class Scraper:
                           columns=['Symbol', 'Name', 'Price', 'Volume', 'Market_cap', 'Description'])
         return df
 
-    def save_df(self, data):
+    def save_df(self, data,name):
         """this function saves the data into a csv file"""
         print('saving the csv...\n')
-        data.to_csv('/Users/mac/PycharmProjects/pluralsight/project/data/datafromclass.csv')
+        data.to_csv('/Users/mac/PycharmProjects/pluralsight/project/data/{}.csv'.format(name))
         print('succeed\n')
 
     def get_html(self, URL):
