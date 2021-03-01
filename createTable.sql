@@ -1,3 +1,7 @@
+CREATE DATABASE stocks;
+
+use stocks;
+
 CREATE TABLE `main_data`(
   `symbol` varchar(15) PRIMARY KEY,
   `Name_of_asset` varchar(25),
