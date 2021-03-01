@@ -5,6 +5,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from project.insertdata import insert_data_executive , insert_data_news , insert_main_data , insert_financial_data
 import project.tags as t
 
 options = Options()
@@ -37,7 +38,13 @@ class Scraper:
         this function gets the data by calling "get_data" function.
         """
         table = self.get_table()
-        main_data, data_executives, financial_data, news_data = self.get_data(table,symbol_choice)
+
+        main_data,data_executives, financial_data, news_data = self.get_data(table,symbol_choice)
+
+        # insert_main_data(main_data)
+        insert_data_executive(data_executives)
+        insert_data_news(news_data)
+        insert_financial_data(financial_data)
 
         if self.save:
             self.save_df(main_data,'main_data')
@@ -110,7 +117,7 @@ class Scraper:
         data_news = pd.DataFrame(news_seiries_list)
         data_excutive = pd.DataFrame(executives_siries_lst)
 
-        return data, data_excutive, financial_data, data_news
+        return data ,data_excutive, financial_data, data_news
 
     def get_news(self, symbol):
         news_link = t.NEWS_LINK.format(symbol, symbol)
@@ -152,7 +159,7 @@ class Scraper:
             return series_lst
         except :
             print('cannot extract the {} articles'.format(symbol))
-            return [pd.Series([symbol, "N/A", "N/A", "N/A"], index=index)]
+            return [pd.Series([symbol, "N/A", "N/A"], index=index)]
 
 
 
