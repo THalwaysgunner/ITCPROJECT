@@ -1,11 +1,12 @@
 #  packages and modules to import
 import requests
+from datetime import datetime
 import time
 import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from project.insertdata import insert_data_executive , insert_data_news , insert_main_data , insert_financial_data
+from project.insert_and_update_db import update_insert_db
 import project.tags as t
 
 options = Options()
@@ -31,7 +32,7 @@ class Scraper:
         except ValueError:
             print('OOPS! ERROR {}'.format(page.status_code))
 
-    def scrape_all(self,symbol_choice=None):
+    def scrape_all(self, symbol_choice=None):
         """
         this function saves or prints (upon the command) entered data
         into a database made out of numeres tables
@@ -39,12 +40,8 @@ class Scraper:
         """
         table = self.get_table()
 
-        main_data,data_executives, financial_data, news_data = self.get_data(table,symbol_choice)
-
-        # insert_main_data(main_data)
-        insert_data_executive(data_executives)
-        insert_data_news(news_data)
-        insert_financial_data(financial_data)
+        main_data,data_executives, financial_data, news_data, price_history = self.get_data(table,symbol_choice)
+        update_insert_db(main_data,data_executives, financial_data, news_data, price_history)
 
         if self.save:
             self.save_df(main_data,'main_data')
@@ -60,7 +57,7 @@ class Scraper:
 
         return
 
-    def get_data(self, table, symbol_choice=None):
+    def get_data(self, table, symbol_choice=None):#symbol_choice= APPL
         """
         this function gets data from two places:
         1. pulls all the data from the main table in the main page, which contains stocks' general info
@@ -85,6 +82,7 @@ class Scraper:
         News = []
 
         body = table.find(t.TAG_BODY, attrs={t.TAG_REACTID: '72'})
+        ts = datetime.now()
         for tr in body.find_all(t.TAG_TR):
 
             symbol = tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL: 'Symbol'}).text
@@ -116,15 +114,8 @@ class Scraper:
 
         data_news = pd.DataFrame(news_seiries_list)
         data_excutive = pd.DataFrame(executives_siries_lst)
-
-        return data ,data_excutive, financial_data, data_news
-
-    def get_news(self, symbol):
-        news_link = t.NEWS_LINK.format(symbol, symbol)
-        attr = 'js-content-viewer Fw(b) Fz(18px) Lh(23px) LineClamp(2,46px) Fz(17px)--sm1024 Lh(19px)--sm1024 ' \
-               'LineClamp(2,38px)--sm1024 mega-item-header-link Td(n) C(#0078ff):h C(#000) not-isInStreamVideoEnabled ' \
-               'wafer-destroyed '
-
+        price_history = self.get_historical_price(data,ts)
+        return data, data_excutive, financial_data, data_news ,price_history
 
     def get_news(self, symbol):
         """
@@ -149,7 +140,7 @@ class Scraper:
         soup = BeautifulSoup(source, t.HTML_PARSER)
         driver.quit()
 
-        try :
+        try:
             content = soup.find(t.TAG_UL, attrs={t.TAG_CLASS : 'My(0) Ov(h) P(0) Wow(bw)'})
             for tr in content.find_all(t.TAG_LI, attrs={t.TAG_CLASS : 'js-stream-content Pos(r)'}) :
                 title = tr.find(t.TAG_A, attrs={t.TAG_CLASS : attr}, href=True).text
@@ -157,11 +148,10 @@ class Scraper:
                 series_lst.append(pd.Series([symbol, title, link], index=index))
 
             return series_lst
-        except :
+
+        except:
             print('cannot extract the {} articles'.format(symbol))
             return [pd.Series([symbol, "N/A", "N/A"], index=index)]
-
-
 
 
     def get_description(self, symbol):
@@ -208,7 +198,6 @@ class Scraper:
         except :
             print('cannot extract the {} executives'.format(symbol))
             return [pd.Series([symbol, "N/A", "N/A", "N/A"], index=index)]
-
 
     def get_financial(self, symbol):
         """
@@ -273,3 +262,11 @@ class Scraper:
             return soup
         except ValueError:
             print('OOPS! ERROR {}'.format(page.status_code))
+
+
+    def get_historical_price(self,main_data,ts):
+
+            historical_prices = main_data[['Symbol', 'Price']]
+            historical_prices['TimeStamp'] = ts
+            return historical_prices
+

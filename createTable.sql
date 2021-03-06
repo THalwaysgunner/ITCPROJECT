@@ -10,6 +10,7 @@ CREATE TABLE `main_data`(
   `market_cap` varchar(25),
   `description` text
 );
+
 DROP TABLE data_executive;
 CREATE TABLE `data_executive`(
   `symbol` varchar(15),
@@ -17,6 +18,7 @@ CREATE TABLE `data_executive`(
   `title` text,
   `salary` varchar(25)
 );
+
 DROP TABLE financial_data;
 CREATE TABLE `financial_data` (
   `symbol` varchar(15) ,
@@ -25,15 +27,30 @@ CREATE TABLE `financial_data` (
   `TTM_expense` varchar(15),
   `TTM_cost_of_revenue` varchar(15)
 );
+
 DROP TABLE news_data;
 CREATE TABLE `news_data` (
   `symbol` varchar(15) ,
   `title` text,
   `news_link` text
 );
+DROP TABLE historical_prices;
+CREATE TABLE `historical_prices`(
+    `Symbol` varchar(15),
+    `Date` datetime ,
+    `price` varchar(15)
+);
+
+
+select * from prices;
+
+
+
 
 ALTER TABLE `main_data` ADD FOREIGN KEY (`symbol`) REFERENCES `data_executive` (`symbol`);
 
 ALTER TABLE `main_data` ADD FOREIGN KEY (`symbol`) REFERENCES `financial_data` (`symbol`);
 
 ALTER TABLE `main_data` ADD FOREIGN KEY (`symbol`) REFERENCES `news_data` (`symbol`);
+
+select * from news_data;
