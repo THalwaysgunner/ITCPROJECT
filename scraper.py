@@ -15,24 +15,25 @@ options.add_argument("--window-size=1920,1200")
 
 
 class Scraper:
-    def __init__(self, save=False):
+    def __init__(self, save=False) :
         """intiate the structure,
         the function's default mode is only printing the output, without saving it"""
         self.soup = self.get_soup()
         self.save = save
 
-    def get_soup(self):
+    @staticmethod
+    def get_soup():
         """
         this function gets the content from the page and convert it via BeautifulSoup
         """
-        try:
+        try :
             page = requests.get(t.URL)
             soup = BeautifulSoup(page.content, t.HTML_PARSER)
             return soup
-        except ValueError:
+        except ValueError :
             print('OOPS! ERROR {}'.format(page.status_code))
 
-    def scrape_all(self, symbol_choice=None):
+    def scrape_all(self, symbol_choice=None) :
         """
         this function saves or prints (upon the command) entered data
         into a database made out of numeres tables
@@ -40,16 +41,16 @@ class Scraper:
         """
         table = self.get_table()
 
-        main_data,data_executives, financial_data, news_data, price_history = self.get_data(table,symbol_choice)
-        update_insert_db(main_data,data_executives, financial_data, news_data, price_history)
+        main_data, data_executives, financial_data, news_data, price_history = self.get_data(table, symbol_choice)
+        update_insert_db(main_data, data_executives, financial_data, news_data, price_history)
 
-        if self.save:
-            self.save_df(main_data,'main_data')
-            self.save_df(data_executives,'data_executives')
-            self.save_df(financial_data,'financial_data')
-            self.save_df(news_data,'news_data')
+        if self.save :
+            self.save_df(main_data, 'main_data')
+            self.save_df(data_executives, 'data_executives')
+            self.save_df(financial_data, 'financial_data')
+            self.save_df(news_data, 'news_data')
 
-        else:
+        else :
             print(main_data.head())
             print(data_executives.head())
             print(financial_data.head())
@@ -57,7 +58,7 @@ class Scraper:
 
         return
 
-    def get_data(self, table, symbol_choice=None):#symbol_choice= APPL
+    def get_data(self, table, symbol_choice=None) :  # symbol_choice= APPL
         """
         this function gets data from two places:
         1. pulls all the data from the main table in the main page, which contains stocks' general info
@@ -81,17 +82,17 @@ class Scraper:
         financial_data_series = []
         News = []
 
-        body = table.find(t.TAG_BODY, attrs={t.TAG_REACTID: '72'})
+        body = table.find(t.TAG_BODY, attrs={t.TAG_REACTID : '72'})
         ts = datetime.now()
-        for tr in body.find_all(t.TAG_TR):
+        for tr in body.find_all(t.TAG_TR) :
 
-            symbol = tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL: 'Symbol'}).text
-            if (symbol_choice is None) or (symbol in symbol_choice):  # choosing specific data
+            symbol = tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL : 'Symbol'}).text
+            if (symbol_choice is None) or (symbol in symbol_choice) :  # choosing specific data
                 Symbol.append(symbol)
-                Name.append(tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL: 'Name'}).text)
-                Price.append(tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL: 'Price (Intraday)'}).text)
-                Volume.append(tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL: 'Volume'}).text)
-                Market_cap.append(tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL: 'Market Cap'}).text)
+                Name.append(tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL : 'Name'}).text)
+                Price.append(tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL : 'Price (Intraday)'}).text)
+                Volume.append(tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL : 'Volume'}).text)
+                Market_cap.append(tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL : 'Market Cap'}).text)
                 desc = self.get_description(symbol)
                 Description.append(desc)
                 executives = self.get_executive(symbol)
@@ -103,21 +104,22 @@ class Scraper:
         financial_data = pd.DataFrame(financial_data_series)
 
         executives_siries_lst = []
-        for list_series in Executives:
-            for series in list_series:
+        for list_series in Executives :
+            for series in list_series :
                 executives_siries_lst.append(series)
 
         news_seiries_list = []
-        for list_series in News:
-            for series in list_series:
+        for list_series in News :
+            for series in list_series :
                 news_seiries_list.append(series)
 
         data_news = pd.DataFrame(news_seiries_list)
         data_excutive = pd.DataFrame(executives_siries_lst)
-        price_history = self.get_historical_price(data,ts)
-        return data, data_excutive, financial_data, data_news ,price_history
+        price_history = self.get_historical_price(data, ts)
+        return data, data_excutive, financial_data, data_news, price_history
 
-    def get_news(self, symbol):
+    @staticmethod
+    def get_news(symbol):
         """
         this function enters the symbol (=stock) page through the link (NEWS_LINK)
         and collects articles related, based on the current symbol
@@ -140,7 +142,7 @@ class Scraper:
         soup = BeautifulSoup(source, t.HTML_PARSER)
         driver.quit()
 
-        try:
+        try :
             content = soup.find(t.TAG_UL, attrs={t.TAG_CLASS : 'My(0) Ov(h) P(0) Wow(bw)'})
             for tr in content.find_all(t.TAG_LI, attrs={t.TAG_CLASS : 'js-stream-content Pos(r)'}) :
                 title = tr.find(t.TAG_A, attrs={t.TAG_CLASS : attr}, href=True).text
@@ -149,19 +151,18 @@ class Scraper:
 
             return series_lst
 
-        except:
+        except :
             print('cannot extract the {} articles'.format(symbol))
             return [pd.Series([symbol, "N/A", "N/A"], index=index)]
 
-
-    def get_description(self, symbol):
+    def get_description(self, symbol) :
         """
         this function enters the symbol's (=stock) profile page, through the link (PROFILE_LINK)
         and returns description of current stock
         :param: symbol: current stock name
         :return: description of the current stock, if not exist - return 'no description' instead
         """
-        try:
+        try :
 
             PROFILE_LINK = t.URL_LINK.format(symbol, symbol)
             PAGE = self.get_html(PROFILE_LINK)
@@ -171,7 +172,7 @@ class Scraper:
             print('cannot extract the {} description'.format(symbol))
             return 'no description'
 
-    def get_executive(self, symbol):
+    def get_executive(self, symbol) :
         """
         this function enters the symbol (=stock) profile page, through the link (PROFILE_LINK)
         and gets the stock's executives' names, title and salaries.
@@ -182,7 +183,7 @@ class Scraper:
         """
         series_lst = []
         index = ['Symbol', 'Name', 'Title', 'Salary']
-        try :
+        try:
             PROFILE_LINK = t.URL_LINK.format(symbol, symbol)
             PAGE = self.get_html(PROFILE_LINK)
             content = PAGE.find(t.TAG_TABLE, attrs={t.TAG_CLASS : 'W(100%)'})
@@ -195,11 +196,12 @@ class Scraper:
                 series_lst.append(pd.Series([symbol, Name, Title, Salary], index=index))
 
             return series_lst
-        except :
+
+        except:
             print('cannot extract the {} executives'.format(symbol))
             return [pd.Series([symbol, "N/A", "N/A", "N/A"], index=index)]
 
-    def get_financial(self, symbol):
+    def get_financial(self, symbol) :
         """
         this function enters the symbol (=stock) financial section, through the link (FINANCIAL_LINK)
         and gets the stock's financial info.
@@ -215,7 +217,7 @@ class Scraper:
         index = ['Symbol', 'TTM revenue', 'TTM Gross Profit', 'TTM expense', 'TTM Cost_of_Revenue']
         attr = 'Ta(c) Py(6px) Bxz(bb) BdB Bdc($seperatorColor) Miw(120px) Miw(140px)--pnclg Bgc($lv1BgColor) fi-row:h_Bgc($hoverBgColor) D(tbc)'
 
-        try :
+        try:
             link = t.FINANCIAL_LINK.format(symbol, symbol)
             page = self.get_html(link)
             content = page.find(t.TAG_DIV, attrs={t.TAG_CLASS : 'D(tbrg)'})
@@ -225,10 +227,10 @@ class Scraper:
             total_yearly_expense = tr[11].find(t.TAG_DIV, attrs={t.TAG_CLASS : attr}).text
             total_yearly_Cost_of_Revenue = tr[1].find(t.TAG_DIV, attrs={t.TAG_CLASS : attr}).text
 
-        except :
+        except:
             print('cannot extract the {} financial info'.format(symbol))
 
-        finally :
+        finally:
             return pd.Series([symbol, total_yearly_revenue, total_yearly_Gross_Profit, total_yearly_expense,
                               total_yearly_Cost_of_Revenue], index=index)
 
@@ -236,10 +238,11 @@ class Scraper:
         """
         this function gets the main stocks table from the page, using soup and html id
         """
-        table = self.soup.find(t.TAG_TABLE, attrs={t.TAG_REACTID: '42'})
+        table = self.soup.find(t.TAG_TABLE, attrs={t.TAG_REACTID : '42'})
         return table
 
-    def create_data_frame(self, symbol, name, price, volume, market_cap, description):
+    @staticmethod
+    def create_data_frame(symbol, name, price, volume, market_cap, description) :
         """
         this function creates DataFrame by using all the collected general data from the main table per stock (symbol)
         """
@@ -247,13 +250,15 @@ class Scraper:
                           columns=['Symbol', 'Name', 'Price', 'Volume', 'Market_cap', 'Description'])
         return df
 
-    def save_df(self, data,name):
+    @staticmethod
+    def save_df(data, name):
         """this function saves the data into a csv file"""
         print('saving the csv...\n')
         data.to_csv('/Users/mac/PycharmProjects/pluralsight/project/data/{}.csv'.format(name))
         print('succeed\n')
 
-    def get_html(self, URL):
+    @staticmethod
+    def get_html(URL):
         """this function gets the page content using requests module and ppage's URL,
         than converts it to be more comfortable to use with BeautifulSoup module"""
         try:
@@ -263,10 +268,9 @@ class Scraper:
         except ValueError:
             print('OOPS! ERROR {}'.format(page.status_code))
 
+    @staticmethod
+    def get_historical_price(main_data, ts):
 
-    def get_historical_price(self,main_data,ts):
-
-            historical_prices = main_data[['Symbol', 'Price']]
-            historical_prices['TimeStamp'] = ts
-            return historical_prices
-
+        historical_prices = main_data[['Symbol', 'Price']]
+        historical_prices['TimeStamp'] = ts
+        return historical_prices

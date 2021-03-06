@@ -22,8 +22,8 @@ def update_insert_db(*data):
     update = np.setdiff1d(new_sym, sym_to_insert)
 
     delete_most_active(sym_to_delete)
-    insert_main_data(sym_to_insert)
-    update_data(update)
+    insert_main_data(main_data.loc[main_data['Symbol'].isin(sym_to_insert)])
+    update_data(main_data.loc[main_data['Symbol'].isin(update)])
     return
 
 
@@ -36,13 +36,14 @@ def delete_most_active(data):
 
     try:
         with connection.cursor() as cursor:
-            for index, row in data.iterrows():
-                symbol = str(row[0])
+            for i in data:
+                symbol = i
 
                 query = 'DELETE FROM main_data WHERE symbol= "{}"'.format(symbol)
                 cursor.execute(query)
                 connection.commit()
-
+    except:
+        return 'No data to delete from most active table'
     finally:
         connection.close()
 
@@ -63,7 +64,8 @@ def update_data(data):
                 query = 'UPDATE main_data SET price = if(price <> {},{},price) WHERE symbol = "{}"'.format(price,price,symbol)
                 cursor.execute(query)
                 connection.commit()
-
+    except:
+        return 'No data to update in most active table'
     finally:
         connection.close()
 
@@ -107,7 +109,8 @@ def insert_main_data(data):
                 if index % commit_every == 0:
                     connection.commit()
             connection.commit()
-
+    except:
+        return 'No data to insert into most active table'
     finally:
         connection.close()
 
@@ -151,7 +154,7 @@ def insert_data_news(data):
     try:
         with connection.cursor() as cursor:
             for index, row in data.iterrows():
-                symbol, title, link = row[0], row[1], row[2]
+                symbol, title, link = str(row[0]), str(row[1]), str(row[2])
 
                 insert_q = 'INSERT INTO news_data (symbol,title,news_link) select DISTINCT "{}","{}","{}"  FROM news_data '.format(symbol,title,link)
                 condition_q = 'WHERE NOT EXISTS(Select DISTINCT symbol ,title From news_data Where symbol = "{}" AND title = "{}")'.format(symbol, title)
@@ -224,6 +227,7 @@ connection = pymysql.connect(host='localhost',
                              database='stocks',
                              cursorclass=pymysql.cursors.DictCursor)
 
+
 def update_financial_table(data):
 
     connection = pymysql.connect(host='localhost',
@@ -235,12 +239,12 @@ def update_financial_table(data):
     try:
         with connection.cursor() as cursor:
             for index, row in data.iterrows() :
-                symbol, revenue , gross_profit, expense , cost = row[0], str(round(row[1],3)),str(round(row[2],3)),str(round(row[3],3)),str(round(row[4],3))
+                symbol, revenue , gross_profit, expense , cost = row[0], row[1],row[2],row[3],row[4]
 
-                query_revenue = 'UPDATE financial_data SET TTM_revenue = if(TTM_revenue <> {},{},TTM_revenue) WHERE symbol = "{}"'.format(revenue,revenue,symbol)
-                query_gross_profit = 'UPDATE financial_data SET TTM_gross_profit = if(TTM_gross_profit <> {},{},TTM_gross_profit) WHERE symbol = "{}"'.format(gross_profit, gross_profit, symbol)
-                query_expense = 'UPDATE financial_data SET TTM_expense = if(TTM_expense <> {},{},TTM_expense) WHERE symbol = "{}"'.format(expense, expense, symbol)
-                query_cost = 'UPDATE financial_data SET TTM_cost_of_revenue = if(TTM_cost_of_revenue <> {},{},TTM_cost_of_revenue) WHERE symbol = "{}"'.format(cost, cost, symbol)
+                query_revenue = 'UPDATE financial_data SET TTM_revenue = if(TTM_revenue <> "{}","{}",TTM_revenue) WHERE symbol = "{}"'.format(revenue,revenue,symbol)
+                query_gross_profit = 'UPDATE financial_data SET TTM_gross_profit = if(TTM_gross_profit <> "{}","{}",TTM_gross_profit) WHERE symbol = "{}"'.format(gross_profit, gross_profit, symbol)
+                query_expense = 'UPDATE financial_data SET TTM_expense = if(TTM_expense <> "{}","{}",TTM_expense) WHERE symbol = "{}"'.format(expense, expense, symbol)
+                query_cost = 'UPDATE financial_data SET TTM_cost_of_revenue = if(TTM_cost_of_revenue <> "{}","{}",TTM_cost_of_revenue) WHERE symbol = "{}"'.format(cost, cost, symbol)
 
                 cursor.execute(query_revenue)
                 cursor.execute(query_gross_profit)
@@ -265,8 +269,8 @@ def update_executive_table(data):
             for index, row in data.iterrows() :
                 symbol, name , title, salary ,  = row[0], str(row[1]) ,str(row[2]),str(row[3])
 
-                query_name_of_ex = 'UPDATE data_executive SET name_of_ex = if(name_of_ex <> {},{},name_of_ex) WHERE symbol = "{}" AND title = "{}"'.format(name,name,symbol,title)
-                query_salary = 'UPDATE data_executive SET salary = if(salary <> {},{},salary) WHERE symbol = "{}" AND name_of_ex = "{}"'.format(salary, salary, symbol,name)
+                query_name_of_ex = 'UPDATE data_executive SET name_of_ex = if(name_of_ex <> "{}","{}",name_of_ex) WHERE symbol = "{}" AND title = "{}"'.format(name,name,symbol,title)
+                query_salary = 'UPDATE data_executive SET salary = if(salary <> "{}","{}",salary) WHERE symbol = "{}" AND name_of_ex = "{}"'.format(salary, salary, symbol,name)
 
                 cursor.execute(query_name_of_ex)
                 cursor.execute(query_salary)
