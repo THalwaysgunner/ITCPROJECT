@@ -1,6 +1,6 @@
 import pymysql
 import numpy as np
-
+import project.tags as t
 
 def update_insert_db(*data):
     main_data = data[0]
@@ -30,7 +30,7 @@ def update_insert_db(*data):
 def delete_most_active(data):
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='Haim8101040',
+                                 password=t.password,
                                  database='stocks',
                                  cursorclass=pymysql.cursors.DictCursor)
 
@@ -52,7 +52,7 @@ def update_data(data):
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='Haim8101040',
+                                 password=t.password,
                                  database='stocks',
                                  cursorclass=pymysql.cursors.DictCursor)
 
@@ -74,7 +74,7 @@ def get_symbol_list():
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='Haim8101040',
+                                 password=t.password,
                                  database='stocks',
                                  cursorclass=pymysql.cursors.DictCursor)
 
@@ -92,7 +92,7 @@ def insert_main_data(data):
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='Haim8101040',
+                                 password=t.password,
                                  database='stocks',
                                  cursorclass=pymysql.cursors.DictCursor)
 
@@ -119,7 +119,7 @@ def insert_data_executive(data):
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='Haim8101040',
+                                 password=t.password,
                                  database='stocks',
                                  cursorclass=pymysql.cursors.DictCursor)
 
@@ -145,7 +145,7 @@ def insert_data_news(data):
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='Haim8101040',
+                                 password=t.password,
                                  database='stocks',
                                  cursorclass=pymysql.cursors.DictCursor)
 
@@ -173,7 +173,7 @@ def insert_financial_data(data):
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='Haim8101040',
+                                 password=t.password,
                                  database='stocks',
                                  cursorclass=pymysql.cursors.DictCursor)
 
@@ -199,7 +199,7 @@ def insert_historical_prices(data):
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='Haim8101040',
+                                 password=t.password,
                                  database='stocks',
                                  cursorclass=pymysql.cursors.DictCursor)
 
@@ -226,7 +226,7 @@ def update_financial_table(data):
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='Haim8101040',
+                                 password=t.password,
                                  database='stocks',
                                  cursorclass=pymysql.cursors.DictCursor)
 
@@ -254,7 +254,7 @@ def update_executive_table(data):
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
-                                 password='Haim8101040',
+                                 password=t.password,
                                  database='stocks',
                                  cursorclass=pymysql.cursors.DictCursor)
 

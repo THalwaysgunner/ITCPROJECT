@@ -21,3 +21,5 @@ TAG_ARIALABEL = 'aria-label'
 TAG_LI = 'li'
 TAG_HREF = 'href'
 TAG_DATATEST = 'data-test'
+
+DB_PASS = 'password'
