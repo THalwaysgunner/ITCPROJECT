@@ -63,6 +63,14 @@ def delete_most_active(data):
 
 
 def update_data(data):
+    """
+    this helper function replaces the price of a certain stock, received from the scraped data from 'main_data'
+    function (in 'scraper.py' script).
+    the function converts the price only if the new price is different from the one currently exists in
+    'stock_general_info' table.
+    :param data: the current scraped data (incloding the price)
+    :return: a full up to date 'stock_general_info' table, with updated prices, if necessary
+    """
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
