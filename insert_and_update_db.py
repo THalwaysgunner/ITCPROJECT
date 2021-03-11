@@ -3,6 +3,16 @@ import numpy as np
 import project.tags as t
 
 def update_insert_db(*data):
+    """
+    this is a help function, and it's purpose is to insert and, or update all collected info from 'main_data' function
+    (located on the 'scraper' script) into a DB.
+    this function get help from helper functions as well (insert_data_news, insert_historical_prices,
+    update_financial_table, update_executive_table, delete_most_active, insert_main_data, update_data)
+
+    :param data: by running it in 'scraper.py'  -  the entered input is all the scraped data,
+    already organized.
+    :return: the database tables, containing up to date info
+    """
     main_data = data[0]
     data_executives = data[1]
     financial_data = data[2]
@@ -28,6 +38,10 @@ def update_insert_db(*data):
 
 
 def delete_most_active(data):
+    """
+    this function deletes stock's info in case the following scrape no longer consists
+    the stock as one of the most active stocks (e.g the stock no longer exists in the most-active page's table)
+    """
     connection = pymysql.connect(host='localhost',
                                  user='root',
                                  password=t.password,
@@ -58,10 +72,10 @@ def update_data(data):
 
     try:
         with connection.cursor() as cursor:
-            for index, row in data.iterrows() :
-                symbol, price= str(row[2]), str(round(row[1],2))
+            for index, row in data.iterrows():
+                symbol, price = str(row[2]), str(round(row[1], 2))
 
-                query = 'UPDATE stock_general_info SET price = if(price <> {},{},price) WHERE symbol = "{}"'.format(price,price,symbol)
+                query = 'UPDATE stock_general_info SET price = if(price <> {},{},price) WHERE symbol = "{}"'.format(price, price, symbol)
                 cursor.execute(query)
                 connection.commit()
     except:
@@ -71,7 +85,10 @@ def update_data(data):
 
 
 def get_symbol_list():
-
+    """
+    this helper function calls all existing stocks (=symbols) from the DB, 'stock_general_info' table,
+    and return a list of them
+    """
     connection = pymysql.connect(host='localhost',
                                  user='root',
                                  password=t.password,
@@ -89,6 +106,12 @@ def get_symbol_list():
 
 
 def insert_main_data(data):
+    """
+    this helper function enters all the collected data into the DB's main table - 'stock_general_info'.
+    the function commits the inserts every 20 rows
+    :param data: the current scraped data
+    :return: a full up to date 'stock_general_info' table
+    """
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
@@ -116,6 +139,13 @@ def insert_main_data(data):
 
 
 def insert_data_executive(data):
+    """
+    this helper function enters all the collected data scraped from 'get_executive' function (in 'scraper.py' script)
+    into 'stock_executive' table
+    the function commits the inserts every 20 rows
+    :param data: the current scraped data
+    :return: a full up to date 'stock_executive' table
+    """
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
@@ -128,10 +158,10 @@ def insert_data_executive(data):
     try:
         with connection.cursor() as cursor:
             for index, row in data.iterrows() :
-                symbol,name_of_ex,title,salary= row[0],row[1],row[2],row[3]
+                symbol, name_of_ex, title, salary = row[0], row[1], row[2], row[3]
 
-                values = [symbol,name_of_ex,title,salary]
-                cursor.execute('INSERT INTO stock_executive (symbol,name_of_ex,title,salary) VALUES(%s,%s,%s,%s)',values)
+                values = [symbol, name_of_ex, title, salary]
+                cursor.execute('INSERT INTO stock_executive (symbol,name_of_ex,title,salary) VALUES(%s,%s,%s,%s)', values)
 
                 if index % commit_every == 0:
                     connection.commit()
@@ -142,6 +172,13 @@ def insert_data_executive(data):
 
 
 def insert_data_news(data):
+    """
+    this helper function enters all the collected data scraped from 'get_news' function (in 'scraper.py' script)
+    into 'news' table
+    the function commits the inserts every 20 rows
+    :param data: the current scraped data
+    :return: a full up to date 'news' table
+    """
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
@@ -170,6 +207,13 @@ def insert_data_news(data):
 
 
 def insert_financial_data(data):
+    """
+    this helper function enters all the collected data scraped from 'get_financial' function (in 'scraper.py' script)
+    into 'financial_info' table
+    the function commits the inserts every 20 rows
+    :param data: the current scraped data
+    :return: a full up to date 'financial_info' table
+    """
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
@@ -196,6 +240,13 @@ def insert_financial_data(data):
 
 
 def insert_historical_prices(data):
+    """
+    this helper function enters current collected data scraped from 'get_historical_prices' function
+    (in 'scraper.py' script) into 'historical_prices' table
+    the function commits the inserts every 20 rows
+    :param data: the current scraped data
+    :return: a full up to date 'financial_info' table
+    """
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
@@ -223,6 +274,13 @@ def insert_historical_prices(data):
 
 
 def update_financial_table(data):
+    """
+    this helper function replaces some updated data scraped from 'get_financial' function (in 'scraper.py' script)
+    the function converts the data only if the new scraped data changed from the one currently exists in
+    'financial_info' table.
+    :param data: the current scraped data
+    :return: a full up to date 'financial_info' table, with some updated features, if exist
+    """
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
@@ -251,6 +309,13 @@ def update_financial_table(data):
 
 
 def update_executive_table(data):
+    """
+    this helper function replaces some updated data scraped from 'get_executive' function (in 'scraper.py' script).
+    the function converts the data only if the new scraped data changed from the one currently exists in
+    'stock_executive' table.
+    :param data: the current scraped data
+    :return: a full up to date 'stock_executive' table, with some updated features, if exist
+    """
 
     connection = pymysql.connect(host='localhost',
                                  user='root',
@@ -260,11 +325,11 @@ def update_executive_table(data):
 
     try:
         with connection.cursor() as cursor:
-            for index, row in data.iterrows() :
-                symbol, name , title, salary ,  = row[0], str(row[1]) ,str(row[2]),str(row[3])
+            for index, row in data.iterrows():
+                symbol, name, title, salary,  = row[0], str(row[1]), str(row[2]), str(row[3])
 
-                query_name_of_ex = 'UPDATE stock_executive SET name_of_ex = if(name_of_ex <> "{}","{}",name_of_ex) WHERE symbol = "{}" AND title = "{}"'.format(name,name,symbol,title)
-                query_salary = 'UPDATE stock_executive SET salary = if(salary <> "{}","{}",salary) WHERE symbol = "{}" AND name_of_ex = "{}"'.format(salary, salary, symbol,name)
+                query_name_of_ex = 'UPDATE stock_executive SET name_of_ex = if(name_of_ex <> "{}","{}",name_of_ex) WHERE symbol = "{}" AND title = "{}"'.format(name, name, symbol, title)
+                query_salary = 'UPDATE stock_executive SET salary = if(salary <> "{}","{}",salary) WHERE symbol = "{}" AND name_of_ex = "{}"'.format(salary, salary, symbol, name)
 
                 cursor.execute(query_name_of_ex)
                 cursor.execute(query_salary)

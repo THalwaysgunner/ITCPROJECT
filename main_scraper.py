@@ -15,7 +15,7 @@ def main():
         scraper = Scraper(save=True)
         if len(args.stock) > 0 and args.stock != 'ALL':
             scraper.scrape_all(symbol_choice=args.stock)
-        else :
+        else:
             scraper.scrape_all(symbol_choice=None)
 
     else:

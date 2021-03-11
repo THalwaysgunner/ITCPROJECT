@@ -15,8 +15,8 @@ options.add_argument("--window-size=1920,1200")
 
 
 class Scraper:
-    def __init__(self, save=False) :
-        """intiate the structure,
+    def __init__(self, save=False):
+        """initiate the structure,
         the function's default mode is only printing the output, without saving it"""
         self.soup = self.get_soup()
         self.save = save
@@ -24,33 +24,33 @@ class Scraper:
     @staticmethod
     def get_soup():
         """
-        this function gets the content from the page and convert it via BeautifulSoup
+        this function gets the content from the page and converts it via BeautifulSoup
         """
-        try :
+        try:
             page = requests.get(t.URL)
             soup = BeautifulSoup(page.content, t.HTML_PARSER)
             return soup
-        except ValueError :
+        except ValueError:
             print('OOPS! ERROR {}'.format(page.status_code))
 
-    def scrape_all(self, symbol_choice=None) :
+    def scrape_all(self, symbol_choice=None):
         """
-        this function saves or prints (upon the command) entered data
-        into a database made out of numeres tables
-        this function gets the data by calling "get_data" function.
+        this function saves or prints (upon the CLI command) entered data
+        into a database made out of numerous tables
+        the function gets the data by calling "get_data" function.
         """
         table = self.get_table()
 
         main_data, data_executives, financial_data, news_data, price_history = self.get_data(table, symbol_choice)
         update_insert_db(main_data, data_executives, financial_data, news_data, price_history)
 
-        if self.save :
+        if self.save:
             self.save_df(main_data, 'main_data')
             self.save_df(data_executives, 'data_executives')
             self.save_df(financial_data, 'financial_data')
             self.save_df(news_data, 'news_data')
 
-        else :
+        else:
             print(main_data.head())
             print(data_executives.head())
             print(financial_data.head())
@@ -58,7 +58,7 @@ class Scraper:
 
         return
 
-    def get_data(self, table, symbol_choice=None) :  # symbol_choice= APPL
+    def get_data(self, table, symbol_choice=None):  # symbol_choice= APPL
         """
         this function gets data from two places:
         1. pulls all the data from the main table in the main page, which contains stocks' general info
@@ -69,7 +69,7 @@ class Scraper:
         :param: table: gets table from main page by using implemented "get_table" function
         :optional param: symbol_choice: if wasn't chosen a specific symbol (e.g stock)
         default state - runs over all the existing stocks in the site
-        :return: DataFrames containing all collected info for releavant stock (or stocks)
+        :return: DataFrames containing all collected info for relevant stock (or stocks)
         with stock's name as common value for the DataFrames
         """
         Symbol = []
@@ -84,7 +84,7 @@ class Scraper:
 
         body = table.find(t.TAG_BODY, attrs={t.TAG_REACTID : '72'})
         ts = datetime.now()
-        for tr in body.find_all(t.TAG_TR) :
+        for tr in body.find_all(t.TAG_TR):
 
             symbol = tr.find(t.TAG_TD, attrs={t.TAG_ARIALABEL : 'Symbol'}).text
             if (symbol_choice is None) or (symbol in symbol_choice) :  # choosing specific data
@@ -122,10 +122,10 @@ class Scraper:
     def get_news(symbol):
         """
         this function enters the symbol (=stock) page through the link (NEWS_LINK)
-        and collects articles related, based on the current symbol
+        and collects related article links, based on the current symbol
         :param: symbol: current stock name
         :return: a series of lists, when each list contains symbol name, article name (title), link to the article
-        if no articles where found - return N\A instead
+        if no articles were found - return N\A instead
         """
         news_link = t.NEWS_LINK.format(symbol, symbol)
         attr = 'js-content-viewer Fw(b) Fz(18px) Lh(23px) LineClamp(2,46px) Fz(17px)--sm1024 Lh(19px)--sm1024 ' \
@@ -142,7 +142,7 @@ class Scraper:
         soup = BeautifulSoup(source, t.HTML_PARSER)
         driver.quit()
 
-        try :
+        try:
             content = soup.find(t.TAG_UL, attrs={t.TAG_CLASS : 'My(0) Ov(h) P(0) Wow(bw)'})
             for tr in content.find_all(t.TAG_LI, attrs={t.TAG_CLASS : 'js-stream-content Pos(r)'}) :
                 title = tr.find(t.TAG_A, attrs={t.TAG_CLASS : attr}, href=True).text
@@ -151,28 +151,28 @@ class Scraper:
 
             return series_lst
 
-        except :
+        except:
             print('cannot extract the {} articles'.format(symbol))
             return [pd.Series([symbol, "N/A", "N/A"], index=index)]
 
-    def get_description(self, symbol) :
+    def get_description(self, symbol):
         """
         this function enters the symbol's (=stock) profile page, through the link (PROFILE_LINK)
         and returns description of current stock
         :param: symbol: current stock name
         :return: description of the current stock, if not exist - return 'no description' instead
         """
-        try :
+        try:
 
             PROFILE_LINK = t.URL_LINK.format(symbol, symbol)
             PAGE = self.get_html(PROFILE_LINK)
             CONTENT = PAGE.find(t.TAG_P, attrs={t.TAG_CLASS : 'Mt(15px) Lh(1.6)'}).text
             return CONTENT
-        except :
+        except:
             print('cannot extract the {} description'.format(symbol))
             return 'no description'
 
-    def get_executive(self, symbol) :
+    def get_executive(self, symbol):
         """
         this function enters the symbol (=stock) profile page, through the link (PROFILE_LINK)
         and gets the stock's executives' names, title and salaries.
@@ -201,13 +201,13 @@ class Scraper:
             print('cannot extract the {} executives'.format(symbol))
             return [pd.Series([symbol, "N/A", "N/A", "N/A"], index=index)]
 
-    def get_financial(self, symbol) :
+    def get_financial(self, symbol):
         """
         this function enters the symbol (=stock) financial section, through the link (FINANCIAL_LINK)
         and gets the stock's financial info.
         :param: symbol: current stock name
         :return: series of lists, when each list contains:
-        stock_name (for later DF organizing) and some financial info (yearly revenue, profit, expenses etc).
+        stock_name (for later DB organizing) and some financial info (yearly revenue, profit, expenses etc).
         """
 
         total_yearly_revenue = 'no-data'
@@ -238,11 +238,11 @@ class Scraper:
         """
         this function gets the main stocks table from the page, using soup and html id
         """
-        table = self.soup.find(t.TAG_TABLE, attrs={t.TAG_REACTID : '42'})
+        table = self.soup.find(t.TAG_TABLE, attrs={t.TAG_REACTID: '42'})
         return table
 
     @staticmethod
-    def create_data_frame(symbol, name, price, volume, market_cap, description) :
+    def create_data_frame(symbol, name, price, volume, market_cap, description):
         """
         this function creates DataFrame by using all the collected general data from the main table per stock (symbol)
         """
@@ -252,14 +252,14 @@ class Scraper:
 
     @staticmethod
     def save_df(data, name):
-        """this function saves the data into a csv file"""
+        """this function saves the data into a csv file, in case the user commanded to do so"""
         print('saving the csv...\n')
         data.to_csv('/Users/mac/PycharmProjects/pluralsight/project/data/{}.csv'.format(name))
         print('succeed\n')
 
     @staticmethod
     def get_html(URL):
-        """this function gets the page content using requests module and ppage's URL,
+        """this function gets the page content using requests module and page's URL,
         than converts it to be more comfortable to use with BeautifulSoup module"""
         try:
             page = requests.get(URL)
@@ -270,7 +270,15 @@ class Scraper:
 
     @staticmethod
     def get_historical_price(main_data, ts):
-
+        """
+        this function gets the stock's price and timestamp in each scrape\update of the data from the website,
+        and restores it into a dictionary.
+        the purpose of this function is to show price changes (or non changes) of stocks over time.
+        :param main_data: the main table that scrapes all the info in each scrape\update
+        (scrapes, among others, the 'symbol' and 'Price' - which are relevant for the current function)
+        :param ts: timestamp (date and time) of the current scrape
+        :return: dictionary containing; stock's initials (=symbol), price, timestamp (of the current price scraping)
+        """
         historical_prices = main_data[['Symbol', 'Price']]
         historical_prices['TimeStamp'] = ts
         return historical_prices
