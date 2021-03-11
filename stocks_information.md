@@ -1,6 +1,6 @@
 ## ERD and information
 
-![](stocks info ERD.png)
+![](stocks_info_ERD.png)
 
 ###Main Table
 

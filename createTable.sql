@@ -1,8 +1,9 @@
 CREATE DATABASE stocks;
 
 use stocks;
-DROP TABLE main_data;
-CREATE TABLE `main_data`(
+
+DROP TABLE stock_general_info;
+CREATE TABLE `stock_general_info`(
   `symbol` varchar(15) PRIMARY KEY,
   `Name_of_asset` text,
   `price` varchar(15),
@@ -11,16 +12,16 @@ CREATE TABLE `main_data`(
   `description` text
 );
 
-DROP TABLE data_executive;
-CREATE TABLE `data_executive`(
+DROP TABLE stock_executive;
+CREATE TABLE `stock_executive`(
   `symbol` varchar(15),
   `name_of_ex` text(25),
   `title` text,
   `salary` varchar(25)
 );
 
-DROP TABLE financial_data;
-CREATE TABLE `financial_data` (
+DROP TABLE financial_info;
+CREATE TABLE `financial_info` (
   `symbol` varchar(15) ,
   `TTM_revenue` varchar(15),
   `TTM_gross_profit` varchar(15),
@@ -28,8 +29,8 @@ CREATE TABLE `financial_data` (
   `TTM_cost_of_revenue` varchar(15)
 );
 
-DROP TABLE news_data;
-CREATE TABLE `news_data` (
+DROP TABLE news;
+CREATE TABLE `news` (
   `symbol` varchar(15) ,
   `title` text,
   `news_link` text
@@ -42,14 +43,15 @@ CREATE TABLE `historical_prices`(
 );
 
 
-select * from prices;
+select * from historical_prices;
 
 
 
 
-ALTER TABLE `main_data` ADD FOREIGN KEY (`symbol`) REFERENCES `data_executive` (`symbol`);
+ALTER TABLE `stock_general_info` ADD FOREIGN KEY (`symbol`) REFERENCES `stock_executive` (`symbol`);
 
-ALTER TABLE `main_data` ADD FOREIGN KEY (`symbol`) REFERENCES `financial_data` (`symbol`);
+ALTER TABLE `stock_general_info` ADD FOREIGN KEY (`symbol`) REFERENCES `financial_info` (`symbol`);
 
-ALTER TABLE `main_data` ADD FOREIGN KEY (`symbol`) REFERENCES `news_data` (`symbol`);
+ALTER TABLE `stock_general_info` ADD FOREIGN KEY (`symbol`) REFERENCES `news` (`symbol`);
 
+ALTER TABLE `stock_general_info` ADD FOREIGN KEY (`symbol`) REFERENCES `historical_prices` (`symbol`);
