@@ -103,20 +103,20 @@ class Scraper:
         data = self.create_data_frame(Symbol, Name, Price, Volume, Market_cap, Description)
         financial_data = pd.DataFrame(financial_data_series)
 
-        executives_siries_lst = []
+        executives_series_lst = []
         for list_series in Executives :
             for series in list_series :
-                executives_siries_lst.append(series)
+                executives_series_lst.append(series)
 
-        news_seiries_list = []
+        news_series_list = []
         for list_series in News :
             for series in list_series :
-                news_seiries_list.append(series)
+                news_series_list.append(series)
 
-        data_news = pd.DataFrame(news_seiries_list)
-        data_excutive = pd.DataFrame(executives_siries_lst)
+        data_news = pd.DataFrame(news_series_list)
+        data_executive = pd.DataFrame(executives_series_lst)
         price_history = self.get_historical_price(data, ts)
-        return data, data_excutive, financial_data, data_news, price_history
+        return data, data_executive, financial_data, data_news, price_history
 
     @staticmethod
     def get_news(symbol):

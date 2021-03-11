@@ -53,4 +53,3 @@ ALTER TABLE `main_data` ADD FOREIGN KEY (`symbol`) REFERENCES `financial_data` (
 
 ALTER TABLE `main_data` ADD FOREIGN KEY (`symbol`) REFERENCES `news_data` (`symbol`);
 
-select * from news_data;

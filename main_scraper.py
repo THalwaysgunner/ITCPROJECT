@@ -1,6 +1,7 @@
 from project.scraper import Scraper
 import argparse
 
+
 def main():
     parser = argparse.ArgumentParser(description="get stocks information")
 
@@ -12,7 +13,7 @@ def main():
 
     if args.s is True:
         scraper = Scraper(save=True)
-        if len(args.stock) > 0 and args.stock != 'ALL' :
+        if len(args.stock) > 0 and args.stock != 'ALL':
             scraper.scrape_all(symbol_choice=args.stock)
         else :
             scraper.scrape_all(symbol_choice=None)
@@ -27,6 +28,5 @@ def main():
 
 
 if __name__ == '__main__':
-    # scraper = Scraper()
-    # scraper.scrape_all(symbol_choice=['NIO'])
     main()
+
