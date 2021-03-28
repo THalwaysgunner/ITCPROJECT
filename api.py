@@ -70,6 +70,11 @@ question_graph = [
 
 
 def get_from_scraper(symbol):
+    """
+    the function will retrieve new data and store it into local DB
+    :param symbol: the data symbol
+    :return: data frames with the new data.
+    """
     data_major_holders, data_institutional_holders = get_stock_holder(symbol)
     data_balance = get_balance(symbol)
     data_cash_flow = get_cash_flow(symbol)
@@ -77,6 +82,9 @@ def get_from_scraper(symbol):
 
 
 def get_stock_graph_in_range(tickers,sd,ed=None,p='1d'):
+    """"
+    the function get a start date and end date follow by a interval period of time
+    and plot the stock price for the specific symbol and time interval"""
 
     ticker = tickers
     start_date = sd
@@ -145,6 +153,13 @@ def get_earning(ticker):
 
 
 def get_data_from_api():
+    """
+    the function will get a symbol and fetch the data from an api based on the user choice
+    every api call will get a unique id so we can differ it from other call and a start/end time
+    for every functions call log will be saved into the log file (log folder) with a main log
+    and a specific log for the call
+    :return:
+    """
     s_date = datetime.now()
     uid = uuid.uuid1()
     start_time = time.time()

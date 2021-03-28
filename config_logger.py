@@ -3,6 +3,8 @@ import os
 import logging.handlers
 import time
 
+""""the config file will generate a new log file for every function call 
+so we can check a specific log if needed - every log have a unique id so it can be differ from other logs"""
 
 LOG_FILENAME = 'logs/log_scraper.log'
 
