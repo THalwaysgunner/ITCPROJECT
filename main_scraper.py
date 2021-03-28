@@ -15,8 +15,14 @@ def main():
     args = parser.parse_args()
     option = args.option
 
-    if option == 1:
-        get_data_from_api()
+
+    if args.s is True:
+        scraper = Scraper(save=True)
+        if len(args.stock) > 0 and args.stock != 'ALL':
+            scraper.scrape_all(symbol_choice=args.stock)
+        else:
+            scraper.scrape_all(symbol_choice=None)
+
 
     elif option == 2:
         parser.add_argument('--stock', type=str, nargs='*', help=r'mention specific stock\s',

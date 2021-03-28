@@ -56,7 +56,7 @@ for more detailed information - check 'Prerequisites and Installation' section.
 
 ## Stocks ERD:    
 
-![name](stocks_info_ERD.png)
+![](stocks_info_ERD.png)
 
 *_Detailed explanation of the data can be found on the  attached 'stocks_information.md' file_
 
