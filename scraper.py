@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from project.insert_and_update_db import update_insert_db
+from project.api import *
 import project.tags as t
 
 options = Options()
@@ -99,6 +100,7 @@ class Scraper:
                 Executives.append(executives)
                 financial_data_series.append(self.get_financial(symbol))
                 News.append(self.get_news(symbol))
+
 
         data = self.create_data_frame(Symbol, Name, Price, Volume, Market_cap, Description)
         financial_data = pd.DataFrame(financial_data_series)
