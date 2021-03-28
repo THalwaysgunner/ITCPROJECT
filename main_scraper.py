@@ -1,43 +1,49 @@
-from project.scraper import Scraper
-from project.api import get_data_from_api
+from scraper import Scraper
+from api import get_data_from_api
+from PyInquirer import prompt
+from examples import custom_style_2
 
-import argparse
+
+questions = [
+    {
+        'type': 'list',
+        'name': 'user_option',
+        'message': 'in order to proceed please choose an option ',
+        'choices': ["scraper","immediate data"]
+    }
+]
+
+question_scraper = [
+    {
+        'type': 'input',
+        'name': 'symbol',
+        'message': 'if you like to scrape a specific symbol enter the the symbol\n\
+         please please enter "ALL" for all the symbol',
+
+    },
+
+    {
+        'type' : 'input',
+        'name' : 'saving flag',
+        'message' : 'if you like to save the data locally please add True (default - False)  \
+               ',
+
+    }
+
+]
 
 
 def main():
+    answers = prompt(questions, style=custom_style_2)
+    if answers.get("user_option") == "scraper" :
+        answer_scraper = prompt(question_scraper, style=custom_style_2)
+        symbol = answer_scraper.get("symbol")
+        saving_flag = answer_scraper.get("saving flag")
+        scraper = Scraper(save=saving_flag)
+        scraper.scrape_all(symbol_choice=symbol)
 
-    parser = argparse.ArgumentParser(description="get stocks information\n \
-    in order to get data / graph or immediate stocks info please ENTER 1 \
-    TO scrape data ENTER 2")
-
-    # optional - choose specific stocks to get info from
-    parser.add_argument('--option',type=int , help='choosen option')
-    args = parser.parse_args()
-    option = args.option
-
-    if option == 1:
+    elif answers.get("user_option") == "immediate data" :
         get_data_from_api()
-
-    elif option == 2:
-        parser.add_argument('--stock', type=str, nargs='*', help=r'mention specific stock\s',
-                            default='ALL')
-        parser.add_argument('-s', action='store_true', help='saving the file locally')
-        args = parser.parse_args()
-
-        if args.s is True:
-            scraper = Scraper(save=True)
-            if len(args.stock) > 0 and args.stock != 'ALL':
-                scraper.scrape_all(symbol_choice=args.stock)
-            else :
-                scraper.scrape_all(symbol_choice=None)
-
-        else:
-            scraper = Scraper()
-
-            if len(args.stock) > 0 and args.stock != 'ALL':
-                scraper.scrape_all(symbol_choice=args.stock)
-            else:
-                scraper.scrape_all(symbol_choice=None)
 
 
 if __name__ == '__main__':

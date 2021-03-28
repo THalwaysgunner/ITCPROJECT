@@ -4,6 +4,10 @@ from prompt_toolkit.validation import Validator, ValidationError
 import yfinance as yf
 from datetime import datetime
 import matplotlib.pyplot as plt
+import config_logger as cfl
+import time
+import uuid
+from datetime import datetime
 
 
 class Validator(Validator):
@@ -11,6 +15,7 @@ class Validator(Validator):
     def validate(self, document):
         try:
             str(document.text)
+            cfl.logging.info(f'valide parameter')
         except ValueError:
             raise ValidationError(message="Please enter a stock symbol",
                                   cursor_position=len(document.text))
@@ -81,36 +86,70 @@ def get_stock_graph_in_range(tickers,sd,ed=None,p='1d'):
         end_date = datetime.today().isoformat()
     try:
         ticker_data = yf.Ticker(ticker)
+        cfl.logging.info(f'retrieve data for {ticker} successfully before ploting ')
         data_hist = ticker_data.history(period=period, start=start_date, end=end_date[:10])
 
         data_hist['Close'].plot()
         plt.show()
 
     except ValueError as e:
+        cfl.logging.error(f'failed to fetch data for {ticker} from api')
         print(e)
 
 
 def get_stock_holder(ticker):
-    data = yf.Ticker(ticker)
-    return data.major_holders, data.institutional_holders
+    try:
+        data = yf.Ticker(ticker)
+        cfl.logging.info(f'successful retrieve holders data for {ticker}  ')
+        return data.major_holders, data.institutional_holders
+
+    except ValueError as e :
+        cfl.logging.error(f'failed to fetch holder data for {ticker} from api')
+        print(e)
 
 
 def get_balance(ticker):
-    data = yf.Ticker(ticker)
-    return data.balance_sheet
+
+    try:
+        data = yf.Ticker(ticker)
+        cfl.logging.info(f'successful retrieve balance data for {ticker}  ')
+        return data.balance_sheet
+
+    except ValueError as e :
+        cfl.logging.error(f'failed to fetch balance data for {ticker} from api')
+        print(e)
 
 
 def get_cash_flow(ticker):
-    data = yf.Ticker(ticker)
-    return data.cashflow
+
+    try:
+        data = yf.Ticker(ticker)
+        cfl.logging.info(f'successful retrieve cash_flow data for {ticker}  ')
+        return data.cashflow
+
+    except ValueError as e :
+        cfl.logging.error(f'failed to fetch cash_flow data for {ticker} from api')
+        print(e)
 
 
 def get_earning(ticker):
-    data = yf.Ticker(ticker)
-    return data.earnings
+
+    try:
+        data = yf.Ticker(ticker)
+        cfl.logging.info(f'successful retrieve earning data for {ticker}  ')
+        return data.earnings
+
+    except ValueError as e :
+        cfl.logging.error(f'failed to fetch earning data for {ticker} from api')
+        print(e)
 
 
 def get_data_from_api():
+    s_date = datetime.now()
+    uid = uuid.uuid1()
+    start_time = time.time()
+    cfl.logging.info(f'new session num  {uid} was created at {s_date} ')
+
     functions_dict = {'graph' : get_stock_graph_in_range, 'holder': get_stock_holder, 'balance': get_balance,
                       'cash_flow': get_cash_flow, 'earning': get_earning}
 
@@ -124,7 +163,18 @@ def get_data_from_api():
         start_date = answer_graph.get("start_date")
         end_date = answer_graph.get("end_date")
         period = answer_graph.get("period")
-        print(func(symbol, start_date, end_date, period))
+        e_date = datetime.now()
+        end_time = time.time()
+        print(f"{func(symbol, start_date, end_date, period)}\n")
+        cfl.logging.info(f' session {uid} end at : {e_date}  ')
+        cfl.logging.info(f'the time it took to get data from api for session {uid} is: {end_time - start_time}  ')
+        return
+
     else:
-        print(func(symbol))
+        end_time = time.time()
+        e_date = datetime.now()
+        print(f"{func(symbol)}\n\n")
+        cfl.logging.info(f' session {uid} end at : {e_date}  ')
+        cfl.logging.info(f'the time it took to get data from api for session {uid} is: {end_time - start_time}  ')
+        return
 

@@ -1,14 +1,14 @@
 #  packages and modules to import
 import requests
-from datetime import datetime
+# from datetime import datetime
 import time
 import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from project.insert_and_update_db import update_insert_db
-from project.api import *
-import project.tags as t
+from insert_and_update_db import update_insert_db
+from api import *
+import tags as t
 
 options = Options()
 options.headless = True
@@ -100,7 +100,6 @@ class Scraper:
                 Executives.append(executives)
                 financial_data_series.append(self.get_financial(symbol))
                 News.append(self.get_news(symbol))
-
 
         data = self.create_data_frame(Symbol, Name, Price, Volume, Market_cap, Description)
         financial_data = pd.DataFrame(financial_data_series)
@@ -272,15 +271,15 @@ class Scraper:
 
     @staticmethod
     def get_historical_price(main_data, ts):
-        """
-        this function gets the stock's price and timestamp in each scrape\update of the data from the website,
-        and restores it into a dictionary.
-        the purpose of this function is to show price changes (or non changes) of stocks over time.
-        :param main_data: the main table that scrapes all the info in each scrape\update
-        (scrapes, among others, the 'symbol' and 'Price' - which are relevant for the current function)
-        :param ts: timestamp (date and time) of the current scrape
-        :return: dictionary containing; stock's initials (=symbol), price, timestamp (of the current price scraping)
-        """
+        # """
+        # this function gets the stock's price and timestamp in each scrape\update of the data from the website,
+        # and restores it into a dictionary.
+        # the purpose of this function is to show price changes (or non changes) of stocks over time.
+        # :param main_data: the main table that scrapes all the info in each scrape\update
+        # (scrapes, among others, the 'symbol' and 'Price' - which are relevant for the current function)
+        # :param ts: timestamp (date and time) of the current scrape
+        # :return: dictionary containing; stock's initials (=symbol), price, timestamp (of the current price scraping)"""
+
         historical_prices = main_data[['Symbol', 'Price']]
         historical_prices['TimeStamp'] = ts
         return historical_prices
