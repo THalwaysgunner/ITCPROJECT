@@ -35,13 +35,27 @@ for more detailed information - check 'Prerequisites and Installation' section.
 * Stocks information:
     * Default state - scrapes information of all the stocks currently exist in [most-active](https://finance.yahoo.com/most-active) page.  
     * if you are interested in pulling information of a specific stock\s - add stock symbol\s, delimited by spaces (if neccessery)  
+    * for immediate data such (graph of apple stock for the last day or share holder for a stock) you can use >immediate data and follow the instruction bellow.
     * command examples:
     ```bash
-    >python3 main_scraper.py AAPL
+    >python3 main_scraper.py 
     ```
     ```bash
-    >python3 main_scraper.py AAPL NID
+      python3 main_scraper.py 
+  
+      scraper
+     >immediate data
     ```
+     ```bash
+      python3 main_scraper.py 
+  
+      graph
+     >holder
+      balance
+      cash_flow
+      earning
+    ```
+
 
 * Saving your scraped data
     * Default state - only displays the data on your screen    

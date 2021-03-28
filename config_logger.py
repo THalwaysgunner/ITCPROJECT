@@ -21,15 +21,15 @@ logger.addHandler(handler)
 # This is a stale log, so roll it
 if needRoll:
     # Add timestamp
-    logger.debug('\n---------\nLog closed on %s.\n---------\n' % time.asctime())
+    logger.debug('\n---\nLog closed on %s.\n---\n' % time.asctime())
 
     # Roll over on application start
     logger.handlers[0].doRollover()
 
 # Add timestamp
-logger.debug('\n---------\nLog started on %s.\n---------\n' % time.asctime())
+logger.debug('\n---\nLog started on %s.\n---\n' % time.asctime())
 
 # See what files are created so we can track it in the logs folder
-logfiles = glob.glob('%s*' % LOG_FILENAME)
+log_files = glob.glob('%s*' % LOG_FILENAME)
 
-print('\n'.join(logfiles))
+print('\n'.join(log_files))
