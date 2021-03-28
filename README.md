@@ -58,14 +58,25 @@ for more detailed information - check 'Prerequisites and Installation' section.
 
 
 * Saving your scraped data
-    * Default state - only displays the data on your screen    
-    * To save the data - use the optional `-s` flag.
+    * Default state - only displays the data on your screen (False)    
+    * To save the data - use 'TRUE'.
     * command examples:
     ```bash
-    >python3 -s main_scraper.py 
+    >python3 main_scraper.py 
     ```  
     ```bash
-    >python3 -s main_scraper.py AAPL 
+     python3 main_scraper.py 
+  
+    >scraper
+     immediate data
+    ```  
+     ```bash
+     python3 main_scraper.py 
+    >AAPL
+    ```  
+    ```bash
+    python3 main_scraper.py 
+    >TRUE
     ```  
 
 ## Stocks ERD:    
