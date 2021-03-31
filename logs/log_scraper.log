@@ -1,23 +1,17 @@
 
 ---
-Log started on Sun Mar 28 23:16:12 2021.
+Log started on Mon Mar 29 19:39:10 2021.
 ---
 
+new session num  4ad21afc-90ad-11eb-8d32-f218987ff6de was created at 2021-03-29 19:39:12.395664 
+valide parameter
+successful retrieve holders data for AAPL  
 Starting new HTTPS connection (1): finance.yahoo.com:443
-https://finance.yahoo.com:443 "GET /most-active?count=100 HTTP/1.1" 200 None
+https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
 Starting new HTTPS connection (1): finance.yahoo.com:443
-https://finance.yahoo.com:443 "GET /quote/AAPL/profile?p=AAPL HTTP/1.1" 200 None
+https://finance.yahoo.com:443 "GET /quote/AAPL/holders HTTP/1.1" 200 None
+NumExpr defaulting to 8 threads.
 Starting new HTTPS connection (1): finance.yahoo.com:443
-https://finance.yahoo.com:443 "GET /quote/AAPL/profile?p=AAPL HTTP/1.1" 200 None
-Starting new HTTPS connection (1): finance.yahoo.com:443
-https://finance.yahoo.com:443 "GET /quote/AAPL/financials?p=AAPL HTTP/1.1" 200 None
-POST http://127.0.0.1:60267/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
-Starting new HTTP connection (1): 127.0.0.1:60267
-http://127.0.0.1:60267 "POST /session HTTP/1.1" 200 763
-Finished Request
-POST http://127.0.0.1:60267/session/5812e7045cfd0b5eb503bf3d524ca1db/url {"url": "https://finance.yahoo.com/quote/AAPL/?p=AAPL"}
-http://127.0.0.1:60267 "POST /session/5812e7045cfd0b5eb503bf3d524ca1db/url HTTP/1.1" 200 14
-Finished Request
-GET http://127.0.0.1:60267/session/5812e7045cfd0b5eb503bf3d524ca1db/source {}
-http://127.0.0.1:60267 "GET /session/5812e7045cfd0b5eb503bf3d524ca1db/source HTTP/1.1" 200 1081305
-Finished Request
+https://finance.yahoo.com:443 "GET /quote/AAPL/financials HTTP/1.1" 200 None
+ session 4ad21afc-90ad-11eb-8d32-f218987ff6de end at : 2021-03-29 19:39:15.520368  
+the time it took to get data from api for session 4ad21afc-90ad-11eb-8d32-f218987ff6de is: 3.124563217163086  
