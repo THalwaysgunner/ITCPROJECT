@@ -28,28 +28,28 @@ def update_insert_db(*data):
                                      database='stocks',
                                      cursorclass=pymysql.cursors.DictCursor)
 
-        insert_data_news(news_data)
-        insert_historical_prices(price_history)
+        insert_data_news(news_data,connection)
+        insert_historical_prices(price_history,connection)
 
-        update_executive_table(data_executives)
-        update_financial_table(financial_data)
+        update_executive_table(data_executives,connection)
+        update_financial_table(financial_data,connection)
 
         new_sym = main_data['Symbol']
-        current_sym = get_symbol_list()
-        sym_to_delete = np.setdiff1d(current_sym, new_sym)
-        sym_to_insert = np.setdiff1d(new_sym, current_sym)
-        update = np.setdiff1d(new_sym, sym_to_insert)
+        current_sym = get_symbol_list(connection)
+        sym_to_0 = np.setdiff1d(current_sym, new_sym)
+        sym_to_1 = np.setdiff1d(new_sym, current_sym)
+        update = np.setdiff1d(new_sym, sym_to_1,connection)
 
-        delete_most_active(sym_to_delete)
-        insert_main_data(main_data.loc[main_data['Symbol'].isin(sym_to_insert)])
-        update_data(main_data.loc[main_data['Symbol'].isin(update)])
+        update_status(sym_to_0,sym_to_1,connection)
+        insert_main_data(main_data.loc[main_data['Symbol'].isin(sym_to_1)],connection)
+        update_data(main_data.loc[main_data['Symbol'].isin(update)],connection)
         return
 
     finally:
         connection.close()
 
 
-def delete_most_active(data,connection):
+def update_status(change_to_0,change_to_1,connection):
     """
     this function deletes stock's info in case the following scrape no longer consists
     the stock as one of the most active stocks (e.g the stock no longer exists in the most-active page's table)
@@ -57,14 +57,19 @@ def delete_most_active(data,connection):
 
     try:
         with connection.cursor() as cursor:
-            for i in data:
-                symbol = i
+            for i in change_to_0:
+                symbol_0 = i
+                query_0 = 'UPDATE stock_general_info SET status = 0 WHERE symbol = "{}"'.format(symbol_0)
+                cursor.execute(query_0)
 
-                query = 'DELETE FROM stock_general_info WHERE symbol= "{}"'.format(symbol)
-                cursor.execute(query)
-                connection.commit()
-    except:
-        return 'No data to delete from most active table'
+            for i in change_to_1 :
+                symbol_1 = i
+                query_1 = 'DELETE FROM stock_general_info SET status = 1 WHERE symbol= "{}"'.format(symbol_1)
+                cursor.execute(query_1)
+            connection.commit()
+
+    except :
+        return 'No symbol to update from most active table'
 
 
 def update_data(data,connection):
@@ -97,7 +102,7 @@ def get_symbol_list(connection):
     """
     try:
         with connection.cursor() as cursor:
-                cursor.execute('SELECT symbol FROM stock_general_info')
+                cursor.execute('SELECT symbol FROM stock_general_info WHERE status = 1')
                 list_of_symbol = list(map(lambda d: d['symbol'], cursor.fetchall()))
                 return list_of_symbol
 
@@ -118,9 +123,10 @@ def insert_main_data(data,connection):
         with connection.cursor() as cursor:
             for index, row in data.iterrows():
                 symbol, name, price, volume, market, description = row[0], row[1], row[2], row[3], row[4], row[5]
+                status = 1
 
                 values = [symbol, name, price, volume, market, description]
-                cursor.execute('INSERT INTO stock_general_info (symbol,Name_of_asset,price,volume,market_cap,description) VALUES(%s,%s,%s,%s,%s,%s)',values)
+                cursor.execute('INSERT INTO stock_general_info (symbol,Name_of_asset,price,volume,market_cap,description,status) VALUES(%s,%s,%s,%s,%s,%s,%s)',values)
 
                 if index % t.COMMIT_EVERY == 0:
                     connection.commit()

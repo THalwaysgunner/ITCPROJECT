@@ -1,21 +1,21 @@
 
----------
-Log started on Sun Mar 28 22:58:58 2021.
----------
+---
+Log started on Fri Apr  2 17:28:12 2021.
+---
 
-new session num  0bc21144-9000-11eb-bd1d-acde48001122 was created at 2021-03-28 22:59:03.659885 
-valide parameter
-successful retrieve cash_flow data for AAPL  
+new session num  a815591c-93bf-11eb-a0ff-acde48001122 was created at 2021-04-02 17:28:13.293921 
+successful retrieve holders data for aapl  
 Starting new HTTPS connection (1): finance.yahoo.com:443
 https://finance.yahoo.com:443 "GET /quote/AAPL HTTP/1.1" 200 None
 Starting new HTTPS connection (1): finance.yahoo.com:443
 https://finance.yahoo.com:443 "GET /quote/AAPL/holders HTTP/1.1" 200 None
+NumExpr defaulting to 8 threads.
 Starting new HTTPS connection (1): finance.yahoo.com:443
 https://finance.yahoo.com:443 "GET /quote/AAPL/financials HTTP/1.1" 200 None
- session 0bc21144-9000-11eb-bd1d-acde48001122 end at : 2021-03-28 22:59:07.394193  
-the time it took to get data from api for session 0bc21144-9000-11eb-bd1d-acde48001122 is: 3.7341830730438232  
+ session a815591c-93bf-11eb-a0ff-acde48001122 end at : 2021-04-02 17:28:18.022426  
+the time it took to get data from api for session a815591c-93bf-11eb-a0ff-acde48001122 is: 4.728368043899536  
 
----------
-Log closed on Sun Mar 28 23:00:45 2021.
----------
+---
+Log closed on Fri Apr  2 17:29:45 2021.
+---
 

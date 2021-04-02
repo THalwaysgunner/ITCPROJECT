@@ -1,5 +1,4 @@
-from PyInquirer import prompt
-from examples import custom_style_2
+
 from prompt_toolkit.validation import Validator, ValidationError
 import yfinance as yf
 from datetime import datetime
@@ -8,6 +7,7 @@ import config_logger as cfl
 import time
 import uuid
 from datetime import datetime
+import inquirer
 
 
 class Validator(Validator):
@@ -22,49 +22,27 @@ class Validator(Validator):
 
 
 questions = [
-    {
-        'type': 'list',
-        'name': 'user_option',
-        'message': 'in order to get stocks data please choose from the option bellow',
-        'choices': ["graph","holder","balance", "cash_flow","earning"]
-    },
+    inquirer.List('user_option',
+                  message='in order to get stocks data please choose from the option bellow',
+                  choices=["graph","holder","balance", "cash_flow","earning"]),
 
-    {
-        'type': "input",
-        "name": "symbol",
-        "message": "please enter a symbol",
-        "validate": Validator,
-        "filter": lambda val: str(val)
-    }
+    inquirer.Text('symbol',
+                  message='please enter a symbol')
+
 ]
 
+
 question_graph = [
-    {
-        'type': "input",
-        "name": "start_date",
-        "message": "please add a start date (iso format) '2020-1-1",
-        "validate": Validator,
-        "filter": lambda val: str(val)
-    },
 
-
-    {
-        'type' : "input",
-        "name" : "end date",
-        "message" : "please add a end date (iso format) '2020-1-1",
-        "validate" : Validator,
-        "filter" : lambda val : str(val)
-    },
-
-
-    {
-        'type' : "input",
-        "name" : "period",
-        "message" : "please Enter period of time"
-                    "valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max,",
-        "validate" : Validator,
-        "filter" : lambda val : str(val)
-    }
+    inquirer.Text('start_date',
+                  message="please add a start date (iso format) '2020-1-1"
+                  ),
+    inquirer.Text('end date',
+                  message="please add a end date (iso format) '2021-1-1"
+                  ),
+    inquirer.Text('period',
+                  message="please Enter period of time\nvalid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max"
+                  )
 
 ]
 
@@ -109,7 +87,12 @@ def get_stock_holder(ticker):
     try:
         data = yf.Ticker(ticker)
         cfl.logging.info(f'successful retrieve holders data for {ticker}  ')
-        return data.major_holders, data.institutional_holders
+        print(f'Holders representation for {ticker}')
+        print(data.major_holders)
+        print('\n')
+        print(f'detailed Holders  for {ticker}')
+        print(data.institutional_holders)
+        return
 
     except ValueError as e :
         cfl.logging.error(f'failed to fetch holder data for {ticker} from api')
@@ -121,7 +104,9 @@ def get_balance(ticker):
     try:
         data = yf.Ticker(ticker)
         cfl.logging.info(f'successful retrieve balance data for {ticker}  ')
-        return data.balance_sheet
+        print(f'balance for {ticker}')
+        print(data.balance_sheet)
+        return
 
     except ValueError as e :
         cfl.logging.error(f'failed to fetch balance data for {ticker} from api')
@@ -133,7 +118,9 @@ def get_cash_flow(ticker):
     try:
         data = yf.Ticker(ticker)
         cfl.logging.info(f'successful retrieve cash_flow data for {ticker}  ')
-        return data.cashflow
+        print(f'cash flow for {ticker}')
+        print(data.cashflow)
+        return
 
     except ValueError as e :
         cfl.logging.error(f'failed to fetch cash_flow data for {ticker} from api')
@@ -145,7 +132,9 @@ def get_earning(ticker):
     try:
         data = yf.Ticker(ticker)
         cfl.logging.info(f'successful retrieve earning data for {ticker}  ')
-        return data.earnings
+        print(f'earnings for {ticker}')
+        print(data.earnings)
+        return
 
     except ValueError as e :
         cfl.logging.error(f'failed to fetch earning data for {ticker} from api')
@@ -168,13 +157,13 @@ def get_data_from_api():
     functions_dict = {'graph' : get_stock_graph_in_range, 'holder': get_stock_holder, 'balance': get_balance,
                       'cash_flow': get_cash_flow, 'earning': get_earning}
 
-    answers = prompt(questions, style=custom_style_2)
+    answers = inquirer.prompt(questions)
     symbol = answers.get("symbol")
 
     func = functions_dict[answers.get('user_option')]
 
     if answers.get("user_option") == "graph" :
-        answer_graph = prompt(question_graph, style=custom_style_2)
+        answer_graph = inquirer.prompt(question_graph)
         start_date = answer_graph.get("start_date")
         end_date = answer_graph.get("end_date")
         period = answer_graph.get("period")

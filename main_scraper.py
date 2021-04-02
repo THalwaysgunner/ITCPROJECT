@@ -1,42 +1,31 @@
 from scraper import Scraper
-from api import get_data_from_api
-from PyInquirer import prompt
-from examples import custom_style_2
+from api_s import get_data_from_api
+import inquirer
 
-
-  questions = [
-    {
-        'type': 'list',
-        'name': 'user_option',
-        'message': 'in order to proceed please choose an option ',
-        'choices': ["scraper","immediate data"]
-    }
-]
-
-question_scraper = [
-    {
-        'type': 'input',
-        'name': 'symbol',
-        'message': 'if you like to scrape a specific symbol enter the the symbol\n\
-         please please enter "ALL" for all the symbol',
-
-    },
-
-    {
-        'type' : 'input',
-        'name' : 'saving flag',
-        'message' : 'if you like to save the data locally please add True (default - False)  \
-               ',
-
-    }
-
-]
 
 
 def main():
-    answers = prompt(questions, style=custom_style_2)
+    questions = [
+        inquirer.List('user_option',
+                      message="in order to proceed please choose an option",
+                      choices=["scraper", "immediate data"]
+                      )
+    ]
+
+    question_scraper = [
+        inquirer.Text('symbol',
+                      message='if you like to scrape a specific symbol enter the the symbol\nplease please enter "ALL" for all the symbol ',
+                      ),
+        inquirer.Text('saving flag',
+                      message='if you like to save the data locally please add True (default - False) '
+                      ),
+
+    ]
+
+    answers = inquirer.prompt(questions)
+
     if answers.get("user_option") == "scraper" :
-        answer_scraper = prompt(question_scraper, style=custom_style_2)
+        answer_scraper = inquirer.prompt(question_scraper)
         symbol = answer_scraper.get("symbol")
         saving_flag = answer_scraper.get("saving flag")
         scraper = Scraper(save=saving_flag)
@@ -48,5 +37,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-

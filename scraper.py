@@ -1,13 +1,13 @@
 #  packages and modules to import
 import requests
-# from datetime import datetime
+from datetime import datetime
 import time
 import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from insert_and_update_db import update_insert_db
-from api import *
+from api_s import *
 import tags as t
 
 options = Options()
@@ -45,17 +45,17 @@ class Scraper:
         main_data, data_executives, financial_data, news_data, price_history = self.get_data(table, symbol_choice)
         update_insert_db(main_data, data_executives, financial_data, news_data, price_history)
 
-        if self.save:
-            self.save_df(main_data, 'main_data')
-            self.save_df(data_executives, 'data_executives')
-            self.save_df(financial_data, 'financial_data')
-            self.save_df(news_data, 'news_data')
-
-        else:
-            print(main_data.head())
-            print(data_executives.head())
-            print(financial_data.head())
-            print(news_data.head())
+        # if self.save:
+        #     self.save_df(main_data, 'main_data')
+        #     self.save_df(data_executives, 'data_executives')
+        #     self.save_df(financial_data, 'financial_data')
+        #     self.save_df(news_data, 'news_data')
+        #
+        # else:
+        #     print(main_data.head())
+        #     print(data_executives.head())
+        #     print(financial_data.head())
+        #     print(news_data.head())
 
         return
 
