@@ -4,7 +4,7 @@ from PyInquirer import prompt
 from examples import custom_style_2
 
 
-questions = [
+  questions = [
     {
         'type': 'list',
         'name': 'user_option',
