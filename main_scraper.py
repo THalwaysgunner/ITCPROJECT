@@ -24,7 +24,7 @@ def main():
 
     answers = inquirer.prompt(questions)
 
-    if answers.get("user_option") == "scraper" :
+    if answers.get("user_option") == "scraper" : # TODO fix scraper - cannot scraped data while choosing "scraper"
         answer_scraper = inquirer.prompt(question_scraper)
         symbol = answer_scraper.get("symbol")
         saving_flag = answer_scraper.get("saving flag")
