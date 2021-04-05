@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from insert_and_update_db import update_insert_db
+from ID_GENERATOR import get_id
+import config_logger as cfl
 from api_s import *
 import tags as t
 
@@ -43,19 +45,23 @@ class Scraper:
         table = self.get_table()
 
         main_data, data_executives, financial_data, news_data, price_history = self.get_data(table, symbol_choice)
+        data_executives.drop(t.DROP_COL,axis=1,inplace=True)
+        financial_data.drop(t.DROP_COL, axis=1, inplace=True)
+        news_data.drop(t.DROP_COL, axis=1, inplace=True)
+        price_history.drop(t.DROP_COL, axis=1, inplace=True)
+
+        self.save_df(main_data, 'main_data')
+        self.save_df(data_executives, 'data_executives')
+        self.save_df(financial_data, 'financial_data')
+        self.save_df(news_data, 'news_data')
+        self.save_df(price_history, 'history_data')
+
         update_insert_db(main_data, data_executives, financial_data, news_data, price_history)
 
-        # if self.save:
-        #     self.save_df(main_data, 'main_data')
-        #     self.save_df(data_executives, 'data_executives')
-        #     self.save_df(financial_data, 'financial_data')
-        #     self.save_df(news_data, 'news_data')
-        #
-        # else:
-        #     print(main_data.head())
-        #     print(data_executives.head())
-        #     print(financial_data.head())
-        #     print(news_data.head())
+        print(main_data.head())
+        print(data_executives.head())
+        print(financial_data.head())
+        print(news_data.head())
 
         return
 
@@ -103,6 +109,8 @@ class Scraper:
 
         data = self.create_data_frame(Symbol, Name, Price, Volume, Market_cap, Description)
         financial_data = pd.DataFrame(financial_data_series)
+        new_data_fin = get_id(financial_data)
+        financial_data.insert(loc=0, column='ID', value=new_data_fin)
 
         executives_series_lst = []
         for list_series in Executives :
@@ -117,6 +125,16 @@ class Scraper:
         data_news = pd.DataFrame(news_series_list)
         data_executive = pd.DataFrame(executives_series_lst)
         price_history = self.get_historical_price(data, ts)
+
+        new_data_executive = get_id(data_executive)
+        data_executive.insert(loc=0, column='stock_id', value=new_data_executive)
+
+        new_data_news = get_id(data_news)
+        data_news.insert(loc=0, column='stock_id', value=new_data_news)
+
+        new_data_history = get_id(price_history)
+        price_history.insert(loc=0, column='stock_id', value=new_data_history)
+
         return data, data_executive, financial_data, data_news, price_history
 
     @staticmethod
@@ -249,13 +267,18 @@ class Scraper:
         """
         df = pd.DataFrame(list(zip(symbol, name, price, volume, market_cap, description)),
                           columns=['Symbol', 'Name', 'Price', 'Volume', 'Market_cap', 'Description'])
+        new_data = get_id(df)
+
+        df.insert(loc=0, column='ID', value=new_data)
+        new_col_2 = [1 for i in range(len(df['Symbol']))]
+        df.insert(loc=7, column='status', value=new_col_2)
         return df
 
     @staticmethod
     def save_df(data, name):
         """this function saves the data into a csv file, in case the user commanded to do so"""
         print('saving the csv...\n')
-        data.to_csv('/Users/mac/PycharmProjects/pluralsight/project/data/{}.csv'.format(name))
+        data.to_csv(t.SAVE_PATH+'{}.csv'.format(name))
         print('succeed\n')
 
     @staticmethod
