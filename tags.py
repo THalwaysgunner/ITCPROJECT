@@ -1,6 +1,6 @@
 """constants"""
 
-DRIVER_PATH = '/Users/mac/PycharmProjects/pluralsight/project/driver/chromedriver'
+DRIVER_PATH = '/Users/haimattias/Desktop/ITC/PROJECT/pluralsight/project/driver/chromedriver'
 URL = 'https://finance.yahoo.com/most-active?count=100'
 URL_LINK = 'https://finance.yahoo.com/quote/{}/profile?p={}'
 FINANCIAL_LINK = 'https://finance.yahoo.com/quote/{}/financials?p={}'
