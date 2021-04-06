@@ -1,6 +1,6 @@
 
 ---
-Log started on Mon Apr  5 20:10:47 2021.
+Log started on Tue Apr  6 16:50:19 2021.
 ---
 
 matplotlib data path: /Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/matplotlib/mpl-data
@@ -16,23 +16,61 @@ Loaded backend MacOSX version unknown.
 Starting new HTTPS connection (1): finance.yahoo.com:443
 https://finance.yahoo.com:443 "GET /most-active?count=100 HTTP/1.1" 200 None
 Starting new HTTPS connection (1): finance.yahoo.com:443
-https://finance.yahoo.com:443 "GET /quote/AMC/profile?p=AMC HTTP/1.1" 200 None
+https://finance.yahoo.com:443 "GET /quote/VIAC/profile?p=VIAC HTTP/1.1" 200 None
 Starting new HTTPS connection (1): finance.yahoo.com:443
-https://finance.yahoo.com:443 "GET /quote/AMC/profile?p=AMC HTTP/1.1" 200 None
+https://finance.yahoo.com:443 "GET /quote/VIAC/profile?p=VIAC HTTP/1.1" 200 None
 Starting new HTTPS connection (1): finance.yahoo.com:443
-https://finance.yahoo.com:443 "GET /quote/AMC/financials?p=AMC HTTP/1.1" 200 None
-POST http://127.0.0.1:49925/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
-Starting new HTTP connection (1): 127.0.0.1:49925
-http://127.0.0.1:49925 "POST /session HTTP/1.1" 200 763
+https://finance.yahoo.com:443 "GET /quote/VIAC/financials?p=VIAC HTTP/1.1" 200 None
+POST http://127.0.0.1:63168/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:63168
+http://127.0.0.1:63168 "POST /session HTTP/1.1" 200 763
 Finished Request
-POST http://127.0.0.1:49925/session/3d9518fb0d3eb47c8fe57c61bf4ce88a/url {"url": "https://finance.yahoo.com/quote/AMC/?p=AMC"}
-http://127.0.0.1:49925 "POST /session/3d9518fb0d3eb47c8fe57c61bf4ce88a/url HTTP/1.1" 200 14
+POST http://127.0.0.1:63168/session/b77bd6dd8d8586ae8be137dbb784cbee/url {"url": "https://finance.yahoo.com/quote/VIAC/?p=VIAC"}
+http://127.0.0.1:63168 "POST /session/b77bd6dd8d8586ae8be137dbb784cbee/url HTTP/1.1" 200 14
 Finished Request
-GET http://127.0.0.1:49925/session/3d9518fb0d3eb47c8fe57c61bf4ce88a/source {}
-http://127.0.0.1:49925 "GET /session/3d9518fb0d3eb47c8fe57c61bf4ce88a/source HTTP/1.1" 200 1031591
+GET http://127.0.0.1:63168/session/b77bd6dd8d8586ae8be137dbb784cbee/source {}
+http://127.0.0.1:63168 "GET /session/b77bd6dd8d8586ae8be137dbb784cbee/source HTTP/1.1" 200 1029117
 Finished Request
-DELETE http://127.0.0.1:49925/session/3d9518fb0d3eb47c8fe57c61bf4ce88a {}
-http://127.0.0.1:49925 "DELETE /session/3d9518fb0d3eb47c8fe57c61bf4ce88a HTTP/1.1" 200 14
+DELETE http://127.0.0.1:63168/session/b77bd6dd8d8586ae8be137dbb784cbee {}
+http://127.0.0.1:63168 "DELETE /session/b77bd6dd8d8586ae8be137dbb784cbee HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/F/profile?p=F HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/F/profile?p=F HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/F/financials?p=F HTTP/1.1" 200 None
+POST http://127.0.0.1:63255/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:63255
+http://127.0.0.1:63255 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:63255/session/6ab36d17ec30b48d10c87256974c0728/url {"url": "https://finance.yahoo.com/quote/F/?p=F"}
+http://127.0.0.1:63255 "POST /session/6ab36d17ec30b48d10c87256974c0728/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:63255/session/6ab36d17ec30b48d10c87256974c0728/source {}
+http://127.0.0.1:63255 "GET /session/6ab36d17ec30b48d10c87256974c0728/source HTTP/1.1" 200 1043514
+Finished Request
+DELETE http://127.0.0.1:63255/session/6ab36d17ec30b48d10c87256974c0728 {}
+http://127.0.0.1:63255 "DELETE /session/6ab36d17ec30b48d10c87256974c0728 HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/BFT/profile?p=BFT HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/BFT/profile?p=BFT HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/BFT/financials?p=BFT HTTP/1.1" 200 None
+POST http://127.0.0.1:63346/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:63346
+http://127.0.0.1:63346 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:63346/session/2d3280181bb2da941f9462722604f848/url {"url": "https://finance.yahoo.com/quote/BFT/?p=BFT"}
+http://127.0.0.1:63346 "POST /session/2d3280181bb2da941f9462722604f848/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:63346/session/2d3280181bb2da941f9462722604f848/source {}
+http://127.0.0.1:63346 "GET /session/2d3280181bb2da941f9462722604f848/source HTTP/1.1" 200 859199
+Finished Request
+DELETE http://127.0.0.1:63346/session/2d3280181bb2da941f9462722604f848 {}
+http://127.0.0.1:63346 "DELETE /session/2d3280181bb2da941f9462722604f848 HTTP/1.1" 200 14
 Finished Request
 Starting new HTTPS connection (1): finance.yahoo.com:443
 https://finance.yahoo.com:443 "GET /quote/AAPL/profile?p=AAPL HTTP/1.1" 200 None
@@ -40,13 +78,734 @@ Starting new HTTPS connection (1): finance.yahoo.com:443
 https://finance.yahoo.com:443 "GET /quote/AAPL/profile?p=AAPL HTTP/1.1" 200 None
 Starting new HTTPS connection (1): finance.yahoo.com:443
 https://finance.yahoo.com:443 "GET /quote/AAPL/financials?p=AAPL HTTP/1.1" 200 None
-POST http://127.0.0.1:50026/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
-Starting new HTTP connection (1): 127.0.0.1:50026
-http://127.0.0.1:50026 "POST /session HTTP/1.1" 200 763
+POST http://127.0.0.1:63403/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:63403
+http://127.0.0.1:63403 "POST /session HTTP/1.1" 200 763
 Finished Request
-POST http://127.0.0.1:50026/session/f806bcf31ed114f1ac8387a8c447b422/url {"url": "https://finance.yahoo.com/quote/AAPL/?p=AAPL"}
-http://127.0.0.1:50026 "POST /session/f806bcf31ed114f1ac8387a8c447b422/url HTTP/1.1" 200 14
+POST http://127.0.0.1:63403/session/0cb00ee7fa44f7329351d9487c9e3cbb/url {"url": "https://finance.yahoo.com/quote/AAPL/?p=AAPL"}
+http://127.0.0.1:63403 "POST /session/0cb00ee7fa44f7329351d9487c9e3cbb/url HTTP/1.1" 200 14
 Finished Request
-GET http://127.0.0.1:50026/session/f806bcf31ed114f1ac8387a8c447b422/source {}
-http://127.0.0.1:50026 "GET /session/f806bcf31ed114f1ac8387a8c447b422/source HTTP/1.1" 200 1034995
+GET http://127.0.0.1:63403/session/0cb00ee7fa44f7329351d9487c9e3cbb/source {}
+http://127.0.0.1:63403 "GET /session/0cb00ee7fa44f7329351d9487c9e3cbb/source HTTP/1.1" 200 936770
 Finished Request
+DELETE http://127.0.0.1:63403/session/0cb00ee7fa44f7329351d9487c9e3cbb {}
+http://127.0.0.1:63403 "DELETE /session/0cb00ee7fa44f7329351d9487c9e3cbb HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/NIO/profile?p=NIO HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/NIO/profile?p=NIO HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/NIO/financials?p=NIO HTTP/1.1" 200 None
+POST http://127.0.0.1:63503/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:63503
+http://127.0.0.1:63503 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:63503/session/cdeb54a1ce1bd7658e6f0eddd98462c4/url {"url": "https://finance.yahoo.com/quote/NIO/?p=NIO"}
+http://127.0.0.1:63503 "POST /session/cdeb54a1ce1bd7658e6f0eddd98462c4/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:63503/session/cdeb54a1ce1bd7658e6f0eddd98462c4/source {}
+http://127.0.0.1:63503 "GET /session/cdeb54a1ce1bd7658e6f0eddd98462c4/source HTTP/1.1" 200 1019814
+Finished Request
+DELETE http://127.0.0.1:63503/session/cdeb54a1ce1bd7658e6f0eddd98462c4 {}
+http://127.0.0.1:63503 "DELETE /session/cdeb54a1ce1bd7658e6f0eddd98462c4 HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/TME/profile?p=TME HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/TME/profile?p=TME HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/TME/financials?p=TME HTTP/1.1" 200 None
+POST http://127.0.0.1:63601/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:63601
+http://127.0.0.1:63601 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:63601/session/1f546d7aba84441dab64473687aabb72/url {"url": "https://finance.yahoo.com/quote/TME/?p=TME"}
+http://127.0.0.1:63601 "POST /session/1f546d7aba84441dab64473687aabb72/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:63601/session/1f546d7aba84441dab64473687aabb72/source {}
+http://127.0.0.1:63601 "GET /session/1f546d7aba84441dab64473687aabb72/source HTTP/1.1" 200 930952
+Finished Request
+DELETE http://127.0.0.1:63601/session/1f546d7aba84441dab64473687aabb72 {}
+http://127.0.0.1:63601 "DELETE /session/1f546d7aba84441dab64473687aabb72 HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/PLTR/profile?p=PLTR HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/PLTR/profile?p=PLTR HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/PLTR/financials?p=PLTR HTTP/1.1" 200 None
+POST http://127.0.0.1:63731/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:63731
+http://127.0.0.1:63731 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:63731/session/ff102894650ffe26f3ea2813a7e26938/url {"url": "https://finance.yahoo.com/quote/PLTR/?p=PLTR"}
+http://127.0.0.1:63731 "POST /session/ff102894650ffe26f3ea2813a7e26938/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:63731/session/ff102894650ffe26f3ea2813a7e26938/source {}
+http://127.0.0.1:63731 "GET /session/ff102894650ffe26f3ea2813a7e26938/source HTTP/1.1" 200 983594
+Finished Request
+DELETE http://127.0.0.1:63731/session/ff102894650ffe26f3ea2813a7e26938 {}
+http://127.0.0.1:63731 "DELETE /session/ff102894650ffe26f3ea2813a7e26938 HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/AMC/profile?p=AMC HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/AMC/profile?p=AMC HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/AMC/financials?p=AMC HTTP/1.1" 200 None
+POST http://127.0.0.1:63790/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:63790
+http://127.0.0.1:63790 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:63790/session/ccae02c2d4a088cb444fc4adfa21daf6/url {"url": "https://finance.yahoo.com/quote/AMC/?p=AMC"}
+http://127.0.0.1:63790 "POST /session/ccae02c2d4a088cb444fc4adfa21daf6/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:63790/session/ccae02c2d4a088cb444fc4adfa21daf6/source {}
+http://127.0.0.1:63790 "GET /session/ccae02c2d4a088cb444fc4adfa21daf6/source HTTP/1.1" 200 1023934
+Finished Request
+DELETE http://127.0.0.1:63790/session/ccae02c2d4a088cb444fc4adfa21daf6 {}
+http://127.0.0.1:63790 "DELETE /session/ccae02c2d4a088cb444fc4adfa21daf6 HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/BAC/profile?p=BAC HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/BAC/profile?p=BAC HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/BAC/financials?p=BAC HTTP/1.1" 200 None
+POST http://127.0.0.1:63914/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:63914
+http://127.0.0.1:63914 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:63914/session/ecb4ee8b278dbb10168d8e7db429cc54/url {"url": "https://finance.yahoo.com/quote/BAC/?p=BAC"}
+http://127.0.0.1:63914 "POST /session/ecb4ee8b278dbb10168d8e7db429cc54/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:63914/session/ecb4ee8b278dbb10168d8e7db429cc54/source {}
+http://127.0.0.1:63914 "GET /session/ecb4ee8b278dbb10168d8e7db429cc54/source HTTP/1.1" 200 1039195
+Finished Request
+DELETE http://127.0.0.1:63914/session/ecb4ee8b278dbb10168d8e7db429cc54 {}
+http://127.0.0.1:63914 "DELETE /session/ecb4ee8b278dbb10168d8e7db429cc54 HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/NOK/profile?p=NOK HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/NOK/profile?p=NOK HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/NOK/financials?p=NOK HTTP/1.1" 200 None
+POST http://127.0.0.1:64016/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:64016
+http://127.0.0.1:64016 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:64016/session/c591a746610e083bbce109789b714d7e/url {"url": "https://finance.yahoo.com/quote/NOK/?p=NOK"}
+http://127.0.0.1:64016 "POST /session/c591a746610e083bbce109789b714d7e/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:64016/session/c591a746610e083bbce109789b714d7e/source {}
+http://127.0.0.1:64016 "GET /session/c591a746610e083bbce109789b714d7e/source HTTP/1.1" 200 923447
+Finished Request
+DELETE http://127.0.0.1:64016/session/c591a746610e083bbce109789b714d7e {}
+http://127.0.0.1:64016 "DELETE /session/c591a746610e083bbce109789b714d7e HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/VIPS/profile?p=VIPS HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/VIPS/profile?p=VIPS HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/VIPS/financials?p=VIPS HTTP/1.1" 200 None
+POST http://127.0.0.1:64072/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:64072
+http://127.0.0.1:64072 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:64072/session/cb274762be5f0f05bff85a7112d54642/url {"url": "https://finance.yahoo.com/quote/VIPS/?p=VIPS"}
+http://127.0.0.1:64072 "POST /session/cb274762be5f0f05bff85a7112d54642/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:64072/session/cb274762be5f0f05bff85a7112d54642/source {}
+http://127.0.0.1:64072 "GET /session/cb274762be5f0f05bff85a7112d54642/source HTTP/1.1" 200 953861
+Finished Request
+DELETE http://127.0.0.1:64072/session/cb274762be5f0f05bff85a7112d54642 {}
+http://127.0.0.1:64072 "DELETE /session/cb274762be5f0f05bff85a7112d54642 HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/FTCH/profile?p=FTCH HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/FTCH/profile?p=FTCH HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/FTCH/financials?p=FTCH HTTP/1.1" 200 None
+POST http://127.0.0.1:64131/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:64131
+http://127.0.0.1:64131 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:64131/session/29dcbf0dc2d722a86ddf2d27141f9fa0/url {"url": "https://finance.yahoo.com/quote/FTCH/?p=FTCH"}
+http://127.0.0.1:64131 "POST /session/29dcbf0dc2d722a86ddf2d27141f9fa0/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:64131/session/29dcbf0dc2d722a86ddf2d27141f9fa0/source {}
+http://127.0.0.1:64131 "GET /session/29dcbf0dc2d722a86ddf2d27141f9fa0/source HTTP/1.1" 200 942639
+Finished Request
+DELETE http://127.0.0.1:64131/session/29dcbf0dc2d722a86ddf2d27141f9fa0 {}
+http://127.0.0.1:64131 "DELETE /session/29dcbf0dc2d722a86ddf2d27141f9fa0 HTTP/1.1" 200 14
+Finished Request
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/SNAP/profile?p=SNAP HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/SNAP/profile?p=SNAP HTTP/1.1" 200 None
+Starting new HTTPS connection (1): finance.yahoo.com:443
+https://finance.yahoo.com:443 "GET /quote/SNAP/financials?p=SNAP HTTP/1.1" 200 None
+POST http://127.0.0.1:64212/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": ["--headless", "--window-size=1920,1200"]}}}
+Starting new HTTP connection (1): 127.0.0.1:64212
+http://127.0.0.1:64212 "POST /session HTTP/1.1" 200 763
+Finished Request
+POST http://127.0.0.1:64212/session/393d8b5f8764ff14230a01e5ef0b37c0/url {"url": "https://finance.yahoo.com/quote/SNAP/?p=SNAP"}
+http://127.0.0.1:64212 "POST /session/393d8b5f8764ff14230a01e5ef0b37c0/url HTTP/1.1" 200 14
+Finished Request
+GET http://127.0.0.1:64212/session/393d8b5f8764ff14230a01e5ef0b37c0/source {}
+http://127.0.0.1:64212 "GET /session/393d8b5f8764ff14230a01e5ef0b37c0/source HTTP/1.1" 200 1006650
+Finished Request
+DELETE http://127.0.0.1:64212/session/393d8b5f8764ff14230a01e5ef0b37c0 {}
+http://127.0.0.1:64212 "DELETE /session/393d8b5f8764ff14230a01e5ef0b37c0 HTTP/1.1" 200 14
+Finished Request
+ successfully load symbol - id dictionary file from /Users/haimattias/Desktop/ITC/PROJECT/pluralsight/project/symbol_id_dict.pkl
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BFT
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+unique id for FTCH is 91274-4
+
+ symbol - id dictionary file successfully closed
+
+ successfully generate new uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ successfully load symbol - id dictionary file from /Users/haimattias/Desktop/ITC/PROJECT/pluralsight/project/symbol_id_dict.pkl
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BFT
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ successfully load symbol - id dictionary file from /Users/haimattias/Desktop/ITC/PROJECT/pluralsight/project/symbol_id_dict.pkl
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BFT
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ successfully load symbol - id dictionary file from /Users/haimattias/Desktop/ITC/PROJECT/pluralsight/project/symbol_id_dict.pkl
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BFT
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BFT
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BFT
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP
+ successfully load symbol - id dictionary file from /Users/haimattias/Desktop/ITC/PROJECT/pluralsight/project/symbol_id_dict.pkl
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for F
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BFT
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AAPL
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NIO
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for TME
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for PLTR
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for AMC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for BAC
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for NOK
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for VIPS
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for FTCH
+ symbol - id dictionary file successfully closed
+
+ successfully retrieve uuid for SNAP

@@ -50,11 +50,11 @@ class Scraper:
         news_data.drop(t.DROP_COL, axis=1, inplace=True)
         price_history.drop(t.DROP_COL, axis=1, inplace=True)
 
-        self.save_df(main_data, 'main_data')
-        self.save_df(data_executives, 'data_executives')
-        self.save_df(financial_data, 'financial_data')
-        self.save_df(news_data, 'news_data')
-        self.save_df(price_history, 'history_data')
+        # self.save_df(main_data, 'main_data')
+        # self.save_df(data_executives, 'data_executives')
+        # self.save_df(financial_data, 'financial_data')
+        # self.save_df(news_data, 'news_data')
+        # self.save_df(price_history, 'history_data')
 
         update_insert_db(main_data, data_executives, financial_data, news_data, price_history)
 
