@@ -22,6 +22,6 @@ TAG_LI = 'li'
 TAG_HREF = 'href'
 TAG_DATATEST = 'data-test'
 COMMIT_EVERY = 20
-DB_PASS = 'Haim8101040'
+DB_PASS = 'dbpass'
 FILE_NAME = 'symbol_id_dict.pkl'
 DROP_COL = 'Symbol'
